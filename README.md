@@ -16,23 +16,23 @@ The contribution is not the headline return by itself. The system separates five
 4. A time-causal maximum favorable excursion (MFE) state machine may reduce or exit after observed profit is given back. It cannot restore, flip or expand a position.
 5. One-second best bid/ask observations may improve selected fills. This layer cannot change direction or size.
 
-## Frozen evidence snapshot
+## Latest strict append-only replay
 
 | Measure | Result |
 | --- | ---: |
-| Gross diagnostic cumulative return | +488.16% |
-| Real-cost primary cumulative return | **+364.31%** |
-| BTC buy-and-hold return | +48.05% |
-| Maximum drawdown | −12.04% |
-| Sharpe ratio | 2.51 |
-| Closed episodes | 270 |
+| Gross diagnostic cumulative return | +489.41% |
+| Real-cost primary cumulative return | **+358.09%** |
+| BTC buy-and-hold return | +87.58% |
+| Maximum drawdown | −14.34% |
+| Sharpe ratio | 2.35 |
+| Closed episodes | 284 |
 | Target exposure | −100% to +100% |
 
 The primary path includes a 0.02% maker fee, a 0.05% taker fee, side-specific one-second best bid/ask execution where available, and no rebate. The page contains no higher-exposure scenario.
 
 The interactive report includes:
 
-- 5,500 draggable and zoomable four-hour candles;
+- 5,806 draggable and zoomable four-hour candles;
 - lifecycle bands and entry-price guides aligned to the candle clock;
 - the signed target position beneath the market path;
 - buy/sell adjustments, state-machine transitions, one-second fills and MFE actions as independent event layers;
@@ -44,7 +44,7 @@ The interactive report includes:
 
 ## Interpreting the evidence
 
-The headline report covers 2024-01-01 04:00 through 2026-07-05 16:00 UTC. The controlled ablation window ends on 2026-06-25 08:00 UTC so every variant uses the same 5,438 observations.
+The headline report covers 2024-01-01 04:00 through 2026-08-25 16:00 UTC. The previous 5,550 decisions are held fixed and only later bars are appended. Since the prior artifact, the added window returned −1.90% net while BTC rose 27.52%; the model captured the August 19 impulse and the later August 22–25 leg, but stayed flat through the middle of the rally. The controlled ablation window still ends on 2026-06-25 08:00 UTC so every variant uses the same 5,438 observations.
 
 Ablation differences overlap and should not be added. The state-by-asymmetry comparison is descriptive evidence within this frozen experiment, not a universal causal claim. Historical one-second fill improvements still require forward validation of online timing and queue behavior.
 

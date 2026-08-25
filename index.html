@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive BTC/USDT asymmetric trend research replay: 4-hour decisions, 100% exposure ceiling, real-cost performance, lifecycle bands and execution events.">
+  <meta name="description" content="Interactive BTC/USDT asymmetric trend research replay through 2026-08-25: 4-hour decisions, 100% exposure ceiling, real-cost performance, lifecycle bands and execution events.">
   <meta name="theme-color" content="#05090d">
   <meta property="og:type" content="website">
   <meta property="og:title" content="BTC Asymmetric Trend · Research Console">
@@ -17,7 +17,7 @@
   <header class="command-bar">
     <a class="command-brand" href="#top" aria-label="Back to top"><span>QY://</span>BTC_ASYM_TREND</a>
     <div class="command-state" aria-label="Research state">
-      <span class="state-live"><i></i>FROZEN_SIM</span>
+      <span class="state-live"><i></i>FROZEN_REPLAY</span>
       <span>BTCUSDT</span>
       <span>4H</span>
       <span>1.0X</span>
@@ -32,7 +32,7 @@
 
   <main id="top">
     <section class="masthead shell">
-      <div class="masthead-code">RUN / 2024-01-01_04:00Z → 2026-07-05_16:00Z</div>
+      <div class="masthead-code">RUN / 2024-01-01_04:00Z → 2026-08-25_16:00Z</div>
       <div class="masthead-grid">
         <div>
           <p class="prompt-line"><span>&gt;</span> LOAD MODEL.FINAL</p>
@@ -48,12 +48,24 @@
     </section>
 
     <section class="metric-strip shell" aria-label="Performance summary">
-      <article><span>RET.NET.C1</span><strong class="positive" data-metric="netReturn">+364.31%</strong><small>PRIMARY</small></article>
-      <article><span>RET.GROSS.C0</span><strong data-metric="grossReturn">+488.16%</strong><small>DIAGNOSTIC</small></article>
-      <article><span>RET.BTC.1X</span><strong data-metric="benchmarkReturn">+48.05%</strong><small>SAME CLOCK</small></article>
-      <article><span>MAX.DRAWDOWN</span><strong class="negative" data-metric="maxDrawdown">−12.04%</strong><small>C1 PATH</small></article>
-      <article><span>SHARPE</span><strong data-metric="sharpe">2.51</strong><small>4H SERIES</small></article>
-      <article><span>EPISODES</span><strong data-metric="episodes">270</strong><small data-metric="episodeSplit">89L / 181S</small></article>
+      <article><span>RET.NET.C1</span><strong class="positive" data-metric="netReturn">+358.09%</strong><small>PRIMARY</small></article>
+      <article><span>RET.GROSS.C0</span><strong data-metric="grossReturn">+489.41%</strong><small>DIAGNOSTIC</small></article>
+      <article><span>RET.BTC.1X</span><strong data-metric="benchmarkReturn">+87.58%</strong><small>SAME CLOCK</small></article>
+      <article><span>MAX.DRAWDOWN</span><strong class="negative" data-metric="maxDrawdown">−14.34%</strong><small>C1 PATH</small></article>
+      <article><span>SHARPE</span><strong data-metric="sharpe">2.35</strong><small>4H SERIES</small></article>
+      <article><span>EPISODES</span><strong data-metric="episodes">284</strong><small data-metric="episodeSplit">96L / 188S</small></article>
+    </section>
+
+    <section class="replay-strip shell" aria-label="Latest append-only replay">
+      <header>
+        <span>LATEST_REPLAY</span>
+        <strong>STRICT_APPEND_ONLY</strong>
+        <small><b data-replay="latestPrice">$79,452</b> / <b data-replay="latestTime">2026-08-25 16:00Z</b></small>
+      </header>
+      <article><span>TARGET.NOW</span><strong class="negative" data-replay="latestTarget">−52.40% SHORT</strong><small>1.0X CEILING</small></article>
+      <article><span>TROUGH→NOW</span><strong class="positive" data-replay="troughCapture">+8.87%</strong><small data-replay="troughBenchmark">BTC +23.65%</small></article>
+      <article><span>LAST.120H</span><strong class="positive" data-replay="last120h">+2.17%</strong><small data-replay="last120hBenchmark">BTC +9.70%</small></article>
+      <article><span>POST.CUTOFF</span><strong class="negative" data-replay="postCutoff">−1.90%</strong><small data-replay="postCutoffBenchmark">BTC +27.52%</small></article>
     </section>
 
     <section class="console shell" id="tape">
@@ -128,7 +140,7 @@
           <span><i class="line-key drawdown-key"></i>DRAWDOWN</span>
         </div>
         <div id="equityChart" class="equity-chart" aria-label="Strategy and BTC cumulative return comparison"></div>
-        <div class="position-head"><span>DRAWDOWN</span><strong data-metric="maxDrawdown">−12.04%</strong></div>
+        <div class="position-head"><span>DRAWDOWN</span><strong data-metric="maxDrawdown">−14.34%</strong></div>
         <div id="drawdownChart" class="drawdown-chart" aria-label="Strategy drawdown series"></div>
       </div>
     </section>
@@ -192,7 +204,7 @@
   </main>
 
   <footer class="footer shell" id="scope">
-    <span>HISTORICAL SIMULATION / NO LIVE OR QUEUE-PARITY CLAIM</span>
+    <span>UPDATED 2026-08-25 16:00Z / NO LIVE OR QUEUE-PARITY CLAIM</span>
     <span>1.0X / 100% EXPOSURE CEILING / NO REBATES</span>
     <span>QIDONG YAO · QUANTITATIVE RESEARCH</span>
   </footer>

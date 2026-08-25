@@ -65,6 +65,19 @@
   };
   Object.entries(metricBindings).forEach(([key, value]) => setText(`[data-metric="${key}"]`, value));
 
+  const replayBindings = {
+    latestPrice: money.format(data.recentReplay.latestPrice),
+    latestTime: `${utcLabel(data.recentReplay.latestTime)}Z`,
+    latestTarget: `${signedPercent(data.recentReplay.latestTargetPct)} ${data.recentReplay.latestSide}`,
+    troughCapture: signedPercent(data.recentReplay.troughToLatestReturnPct),
+    troughBenchmark: `BTC ${signedPercent(data.recentReplay.troughToLatestBtcPct)}`,
+    last120h: signedPercent(data.recentReplay.last120hReturnPct),
+    last120hBenchmark: `BTC ${signedPercent(data.recentReplay.last120hBtcPct)}`,
+    postCutoff: signedPercent(data.recentReplay.postCutoffReturnPct),
+    postCutoffBenchmark: `BTC ${signedPercent(data.recentReplay.postCutoffBtcPct)}`,
+  };
+  Object.entries(replayBindings).forEach(([key, value]) => setText(`[data-replay="${key}"]`, value));
+
   const ablationBindings = {
     state0Asym0: data.ablation.state0Asym0,
     state0Asym1: data.ablation.state0Asym1,
@@ -110,6 +123,7 @@
       textColor: palette.text,
       fontFamily: palette.mono,
       fontSize: 10,
+      attributionLogo: false,
     },
     grid: {
       vertLines: { color: palette.grid },

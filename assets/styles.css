@@ -290,6 +290,70 @@ h1 em {
   color: var(--red);
 }
 
+.replay-strip {
+  display: grid;
+  grid-template-columns: minmax(210px, 1.15fr) repeat(4, minmax(0, 1fr));
+  border-bottom: 1px solid var(--line-hot);
+  background: rgba(4, 10, 14, 0.78);
+}
+
+.replay-strip > * {
+  min-width: 0;
+  padding: 14px 16px;
+  border-right: 1px solid var(--line);
+}
+
+.replay-strip > *:last-child {
+  border-right: 0;
+}
+
+.replay-strip header,
+.replay-strip article {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.replay-strip header {
+  background: linear-gradient(90deg, rgba(201, 255, 61, 0.055), transparent);
+}
+
+.replay-strip span,
+.replay-strip small {
+  overflow: hidden;
+  color: var(--dim);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.replay-strip header > span {
+  color: var(--acid);
+}
+
+.replay-strip strong {
+  margin: 3px 0 2px;
+  color: var(--text);
+  font-size: 17px;
+  font-weight: 500;
+  letter-spacing: -0.035em;
+  white-space: nowrap;
+}
+
+.replay-strip strong.positive {
+  color: var(--green);
+}
+
+.replay-strip strong.negative {
+  color: var(--red);
+}
+
+.replay-strip small b {
+  color: var(--muted);
+  font-weight: 500;
+}
+
 .console {
   margin-top: 28px;
   border: 1px solid var(--line-hot);
@@ -933,6 +997,24 @@ h1 em {
     border-bottom: 1px solid var(--line);
   }
 
+  .replay-strip {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .replay-strip header {
+    grid-column: 1 / -1;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .replay-strip article:nth-of-type(2n) {
+    border-right: 0;
+  }
+
+  .replay-strip article:nth-of-type(-n + 2) {
+    border-bottom: 1px solid var(--line);
+  }
+
   .tape-readout {
     grid-template-columns: 1.2fr 0.8fr 0.8fr 0.8fr;
   }
@@ -1142,6 +1224,22 @@ h1 em {
 
   .metric-strip strong {
     font-size: 19px;
+  }
+
+  .replay-strip {
+    grid-template-columns: 1fr;
+  }
+
+  .replay-strip header,
+  .replay-strip article,
+  .replay-strip article:nth-of-type(2n) {
+    grid-column: auto;
+    border-right: 0;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .replay-strip article:last-child {
+    border-bottom: 0;
   }
 
   .chart-console {
