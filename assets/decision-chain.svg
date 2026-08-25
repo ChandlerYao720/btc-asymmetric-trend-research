@@ -1,0 +1,143 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="520" viewBox="0 0 1600 520" role="img" aria-labelledby="title description">
+  <title id="title">BTC asymmetric trend decision chain</title>
+  <description id="description">Five constrained stages: four-hour trend direction, state-aware sizing, a machine-learning bad-short veto, a time-causal observed-profit guard, and one-second execution improvement.</description>
+  <defs>
+    <linearGradient id="background" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#061322"/>
+      <stop offset="0.5" stop-color="#030a14"/>
+      <stop offset="1" stop-color="#06101c"/>
+    </linearGradient>
+    <linearGradient id="node" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0d2742"/>
+      <stop offset="1" stop-color="#071522"/>
+    </linearGradient>
+    <linearGradient id="nodeGreen" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0e3a36"/>
+      <stop offset="1" stop-color="#071b22"/>
+    </linearGradient>
+    <linearGradient id="flow" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#4f7cff" stop-opacity="0.5"/>
+      <stop offset="0.5" stop-color="#48d7ff"/>
+      <stop offset="1" stop-color="#35efad" stop-opacity="0.7"/>
+    </linearGradient>
+    <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse">
+      <path d="M32 0H0V32" fill="none" stroke="#6ca7e8" stroke-opacity="0.045"/>
+    </pattern>
+    <filter id="glow" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="5" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <filter id="shadow" x="-30%" y="-30%" width="160%" height="180%">
+      <feDropShadow dx="0" dy="14" stdDeviation="15" flood-color="#000711" flood-opacity="0.55"/>
+    </filter>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="4.5" orient="auto" markerUnits="strokeWidth">
+      <path d="M0 0L9 4.5 0 9Z" fill="#48d7ff"/>
+    </marker>
+  </defs>
+
+  <rect width="1600" height="520" rx="28" fill="url(#background)"/>
+  <rect width="1600" height="520" rx="28" fill="url(#grid)"/>
+  <circle cx="190" cy="80" r="190" fill="#1667ff" opacity="0.06"/>
+  <circle cx="1450" cy="410" r="230" fill="#35efad" opacity="0.045"/>
+
+  <text x="64" y="58" fill="#48d7ff" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="13" font-weight="700" letter-spacing="2.4">CONSTRAINED DECISION ARCHITECTURE</text>
+  <text x="1536" y="58" fill="#8fa5be" text-anchor="end" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif" font-size="12">4h direction → state → veto → memory → fill</text>
+
+  <path d="M312 246H340" stroke="url(#flow)" stroke-width="2" marker-end="url(#arrow)" opacity="0.9"/>
+  <path d="M620 246H648" stroke="url(#flow)" stroke-width="2" marker-end="url(#arrow)" opacity="0.9"/>
+  <path d="M928 246H956" stroke="url(#flow)" stroke-width="2" marker-end="url(#arrow)" opacity="0.9"/>
+  <path d="M1236 246H1264" stroke="url(#flow)" stroke-width="2" marker-end="url(#arrow)" opacity="0.9"/>
+
+  <g filter="url(#shadow)">
+    <rect x="40" y="92" width="272" height="306" rx="22" fill="url(#node)" stroke="#4f7cff" stroke-opacity="0.35"/>
+    <rect x="348" y="92" width="272" height="306" rx="22" fill="url(#node)" stroke="#48d7ff" stroke-opacity="0.35"/>
+    <rect x="656" y="92" width="272" height="306" rx="22" fill="url(#node)" stroke="#a88cff" stroke-opacity="0.38"/>
+    <rect x="964" y="92" width="272" height="306" rx="22" fill="url(#node)" stroke="#ffc65c" stroke-opacity="0.38"/>
+    <rect x="1272" y="92" width="288" height="306" rx="22" fill="url(#nodeGreen)" stroke="#35efad" stroke-opacity="0.42"/>
+  </g>
+
+  <g font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <g transform="translate(64 118)">
+      <rect width="42" height="30" rx="9" fill="#4f7cff" fill-opacity="0.14" stroke="#4f7cff" stroke-opacity="0.42"/>
+      <text x="21" y="20" fill="#72a0ff" text-anchor="middle" font-size="11" font-weight="800">01</text>
+      <text x="0" y="72" fill="#f3f8ff" font-size="25" font-weight="700">Trend direction</text>
+      <text x="0" y="99" fill="#8fa5be" font-size="12">Closed 4-hour bars</text>
+      <line x1="0" y1="121" x2="224" y2="121" stroke="#85b7ff" stroke-opacity="0.14"/>
+      <text x="0" y="150" fill="#b7c6d8" font-size="12">Donchian votes</text>
+      <text x="224" y="150" fill="#48d7ff" text-anchor="end" font-size="12" font-weight="700">20 · 55 · 100</text>
+      <text x="0" y="180" fill="#b7c6d8" font-size="12">Output</text>
+      <text x="224" y="180" fill="#f3f8ff" text-anchor="end" font-size="12" font-weight="700">signed trend vote</text>
+      <rect x="0" y="207" width="224" height="46" rx="11" fill="#06111e" stroke="#4f7cff" stroke-opacity="0.2"/>
+      <text x="14" y="227" fill="#8fa5be" font-size="10">MANDATE</text>
+      <text x="14" y="244" fill="#dbe8f8" font-size="11" font-weight="650">Choose direction — nothing else</text>
+    </g>
+
+    <g transform="translate(372 118)">
+      <rect width="42" height="30" rx="9" fill="#48d7ff" fill-opacity="0.12" stroke="#48d7ff" stroke-opacity="0.42"/>
+      <text x="21" y="20" fill="#48d7ff" text-anchor="middle" font-size="11" font-weight="800">02</text>
+      <text x="0" y="72" fill="#f3f8ff" font-size="25" font-weight="700">State &amp; sizing</text>
+      <text x="0" y="99" fill="#8fa5be" font-size="12">Risk budget, not a new forecast</text>
+      <line x1="0" y1="121" x2="224" y2="121" stroke="#85b7ff" stroke-opacity="0.14"/>
+      <text x="0" y="150" fill="#b7c6d8" font-size="12">Market state</text>
+      <text x="224" y="150" fill="#48d7ff" text-anchor="end" font-size="12" font-weight="700">B0–B4</text>
+      <text x="0" y="180" fill="#b7c6d8" font-size="12">Volatility target</text>
+      <text x="224" y="180" fill="#f3f8ff" text-anchor="end" font-size="12" font-weight="700">30.00%</text>
+      <rect x="0" y="207" width="224" height="46" rx="11" fill="#06111e" stroke="#48d7ff" stroke-opacity="0.2"/>
+      <text x="14" y="227" fill="#8fa5be" font-size="10">BOUNDARY</text>
+      <text x="14" y="244" fill="#dbe8f8" font-size="11" font-weight="650">Target stays −100% to +100%</text>
+    </g>
+
+    <g transform="translate(680 118)">
+      <rect width="42" height="30" rx="9" fill="#a88cff" fill-opacity="0.12" stroke="#a88cff" stroke-opacity="0.45"/>
+      <text x="21" y="20" fill="#bcaaff" text-anchor="middle" font-size="11" font-weight="800">03</text>
+      <text x="0" y="72" fill="#f3f8ff" font-size="25" font-weight="700">Bad-short veto</text>
+      <text x="0" y="99" fill="#8fa5be" font-size="12">Shallow tree · expanding walk-forward</text>
+      <line x1="0" y1="121" x2="224" y2="121" stroke="#85b7ff" stroke-opacity="0.14"/>
+      <text x="0" y="150" fill="#b7c6d8" font-size="12">Label</text>
+      <text x="224" y="150" fill="#a88cff" text-anchor="end" font-size="12" font-weight="700">1h rebound &gt; 1.00%</text>
+      <text x="0" y="180" fill="#b7c6d8" font-size="12">Veto threshold</text>
+      <text x="224" y="180" fill="#f3f8ff" text-anchor="end" font-size="12" font-weight="700">risk ≥ 65.00%</text>
+      <rect x="0" y="207" width="224" height="46" rx="11" fill="#06111e" stroke="#a88cff" stroke-opacity="0.23"/>
+      <text x="14" y="227" fill="#8fa5be" font-size="10">ONLY ACTION</text>
+      <text x="14" y="244" fill="#dbe8f8" font-size="11" font-weight="650">Flatten a dangerous short</text>
+    </g>
+
+    <g transform="translate(988 118)">
+      <rect width="42" height="30" rx="9" fill="#ffc65c" fill-opacity="0.12" stroke="#ffc65c" stroke-opacity="0.45"/>
+      <text x="21" y="20" fill="#ffd47e" text-anchor="middle" font-size="11" font-weight="800">04</text>
+      <text x="0" y="72" fill="#f3f8ff" font-size="25" font-weight="700">Profit memory</text>
+      <text x="0" y="99" fill="#8fa5be" font-size="12">Time-causal observed MFE state</text>
+      <line x1="0" y1="121" x2="224" y2="121" stroke="#85b7ff" stroke-opacity="0.14"/>
+      <text x="0" y="150" fill="#b7c6d8" font-size="12">Visible MFE tiers</text>
+      <text x="224" y="150" fill="#ffc65c" text-anchor="end" font-size="12" font-weight="700">5.00% · 7.50%</text>
+      <text x="0" y="180" fill="#b7c6d8" font-size="12">Giveback trigger</text>
+      <text x="224" y="180" fill="#f3f8ff" text-anchor="end" font-size="12" font-weight="700">25.00%</text>
+      <rect x="0" y="207" width="224" height="46" rx="11" fill="#06111e" stroke="#ffc65c" stroke-opacity="0.23"/>
+      <text x="14" y="227" fill="#8fa5be" font-size="10">ONLY ACTION</text>
+      <text x="14" y="244" fill="#dbe8f8" font-size="11" font-weight="650">Reduce or exit observed profit</text>
+    </g>
+
+    <g transform="translate(1296 118)">
+      <rect width="42" height="30" rx="9" fill="#35efad" fill-opacity="0.11" stroke="#35efad" stroke-opacity="0.45"/>
+      <text x="21" y="20" fill="#35efad" text-anchor="middle" font-size="11" font-weight="800">05</text>
+      <text x="0" y="72" fill="#f3f8ff" font-size="25" font-weight="700">One-second fill</text>
+      <text x="0" y="99" fill="#8fa5be" font-size="12">Observed best bid / ask evidence</text>
+      <line x1="0" y1="121" x2="240" y2="121" stroke="#85b7ff" stroke-opacity="0.14"/>
+      <text x="0" y="150" fill="#b7c6d8" font-size="12">Selected overrides</text>
+      <text x="240" y="150" fill="#35efad" text-anchor="end" font-size="12" font-weight="700">63</text>
+      <text x="0" y="180" fill="#b7c6d8" font-size="12">Mean price improvement</text>
+      <text x="240" y="180" fill="#35efad" text-anchor="end" font-size="12" font-weight="700">+0.0188%</text>
+      <rect x="0" y="207" width="240" height="46" rx="11" fill="#06111e" stroke="#35efad" stroke-opacity="0.23"/>
+      <text x="14" y="227" fill="#8fa5be" font-size="10">ONLY ACTION</text>
+      <text x="14" y="244" fill="#dbe8f8" font-size="11" font-weight="650">Improve fill — never the position</text>
+    </g>
+  </g>
+
+  <g transform="translate(40 428)" font-family="Inter, -apple-system, BlinkMacSystemFont, Segoe UI, sans-serif">
+    <rect width="1520" height="58" rx="16" fill="#061520" stroke="#35efad" stroke-opacity="0.24"/>
+    <circle cx="28" cy="29" r="6" fill="#35efad" filter="url(#glow)"/>
+    <text x="48" y="25" fill="#35efad" font-size="10" font-weight="800" letter-spacing="1.4">SYSTEM GUARDRAIL</text>
+    <text x="48" y="42" fill="#b7c6d8" font-size="12">After the parent sets direction and size, every downstream layer may only flatten, reduce, exit, or improve the fill.</text>
+    <text x="1488" y="34" fill="#8fa5be" text-anchor="end" font-size="11">No side flip · no exposure expansion · 100% ceiling</text>
+  </g>
+</svg>

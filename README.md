@@ -1,0 +1,67 @@
+# BTC Asymmetric Trend Research
+
+An interactive, evidence-grounded portfolio study of a BTC/USDT trend system with a strict **100% exposure ceiling**.
+
+[Open the interactive research page](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
+
+![Interactive BTC strategy research preview](assets/preview.png)
+
+## Research thesis
+
+The contribution is not the headline return by itself. The system separates five responsibilities:
+
+1. A four-hour trend parent chooses direction from 20-, 55- and 100-bar Donchian votes.
+2. Market state and volatility determine how much of the risk budget may be used.
+3. A shallow, walk-forward decision tree may veto an existing short that is at high risk of a sharp rebound. It cannot open a long or increase exposure.
+4. A time-causal maximum favorable excursion (MFE) state machine may reduce or exit after observed profit is given back. It cannot restore, flip or expand a position.
+5. One-second best bid/ask observations may improve selected fills. This layer cannot change direction or size.
+
+## Frozen evidence snapshot
+
+| Measure | Result |
+| --- | ---: |
+| Gross diagnostic cumulative return | +488.16% |
+| Real-cost primary cumulative return | **+364.31%** |
+| BTC buy-and-hold return | +48.05% |
+| Maximum drawdown | −12.04% |
+| Sharpe ratio | 2.51 |
+| Closed episodes | 270 |
+| Target exposure | −100% to +100% |
+
+The primary path includes a 0.02% maker fee, a 0.05% taker fee, side-specific one-second best bid/ask execution where available, and no rebate. The page contains no higher-exposure scenario.
+
+The interactive report includes:
+
+- 5,500 draggable and zoomable four-hour candles;
+- the signed target position beneath the market path;
+- entry, one-second fill and MFE action overlays;
+- cost-aware equity, benchmark and drawdown paths;
+- common-window state/asymmetry comparisons and ablations;
+- normalized long/short episode outcome distributions;
+- explicit evidence and attribution boundaries.
+
+## Interpreting the evidence
+
+The headline report covers 2024-01-01 04:00 through 2026-07-05 16:00 UTC. The controlled ablation window ends on 2026-06-25 08:00 UTC so every variant uses the same 5,438 observations.
+
+Ablation differences overlap and should not be added. The state-by-asymmetry comparison is descriptive evidence within this frozen experiment, not a universal causal claim. Historical one-second fill improvements still require forward validation of online timing and queue behavior.
+
+## Run locally
+
+No build step is required.
+
+```bash
+python3 -m http.server 8000
+```
+
+Then open `http://127.0.0.1:8000/`.
+
+The charting runtime is vendored from [TradingView Lightweight Charts](https://github.com/tradingview/lightweight-charts) under the Apache License 2.0; its license is retained in `assets/vendor/`.
+
+## Scope
+
+This repository publishes a visual research artifact and a sanitized historical evidence snapshot. It does not publish the private strategy implementation, internal experiment registry or live-trading infrastructure.
+
+Historical research simulation only. Not live performance, investment advice or a promise of future returns.
+
+— Qidong Yao
