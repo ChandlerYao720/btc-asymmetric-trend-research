@@ -1,6 +1,6 @@
 # BTC Asymmetric Trend Research
 
-An interactive, evidence-grounded portfolio study of a BTC/USDT trend system with a strict **100% exposure ceiling**.
+An interactive, evidence-grounded research console for a BTC/USDT trend system with a strict **100% exposure ceiling**.
 
 [Open the interactive research page](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
 
@@ -33,8 +33,10 @@ The primary path includes a 0.02% maker fee, a 0.05% taker fee, side-specific on
 The interactive report includes:
 
 - 5,500 draggable and zoomable four-hour candles;
+- lifecycle bands and entry-price guides aligned to the candle clock;
 - the signed target position beneath the market path;
-- entry, one-second fill and MFE action overlays;
+- buy/sell adjustments, state-machine transitions, one-second fills and MFE actions as independent event layers;
+- a scrubber for moving a fixed historical window through the full sample;
 - cost-aware equity, benchmark and drawdown paths;
 - common-window state/asymmetry comparisons and ablations;
 - normalized long/short episode outcome distributions;

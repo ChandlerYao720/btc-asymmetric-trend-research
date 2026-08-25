@@ -5,26 +5,27 @@
   const charts = window.LightweightCharts;
 
   if (!data || !charts) {
-    document.body.insertAdjacentHTML(
-      "afterbegin",
-      '<p class="load-error">The interactive research data could not be loaded.</p>',
-    );
+    document.body.insertAdjacentHTML("afterbegin", '<p class="load-error">DATA_LOAD_ERROR // research snapshot unavailable</p>');
     return;
   }
 
   const palette = {
-    background: "#020912",
-    text: "#8fa5be",
-    grid: "rgba(133, 183, 255, 0.075)",
-    border: "rgba(133, 183, 255, 0.18)",
-    cyan: "#48d7ff",
-    blue: "#4f7cff",
-    green: "#35efad",
-    red: "#ff5c80",
-    amber: "#ffc65c",
-    benchmark: "#d9e4f4",
+    background: "#04090d",
+    text: "#6f8595",
+    grid: "rgba(72, 101, 120, 0.115)",
+    border: "#1a2a37",
+    lineHot: "#345064",
+    acid: "#c9ff3d",
+    green: "#2ff0a4",
+    red: "#ff4d73",
+    cyan: "#31ddf5",
+    amber: "#ffd35a",
+    benchmark: "#c5d2da",
+    mono: '"SFMono-Regular", Menlo, Monaco, Consolas, monospace',
   };
 
+  const epsilon = 1e-8;
+  const day = 86400;
   const byTime = (rows) => new Map(rows.map((row) => [row.time, row]));
   const candleByTime = byTime(data.candles);
   const positionByTime = byTime(data.positions);
@@ -32,38 +33,18 @@
   const benchmarkByTime = byTime(data.benchmark);
   const drawdownByTime = byTime(data.drawdown);
 
-  const eventMap = new Map();
-  const addEvent = (time, label) => {
-    const events = eventMap.get(time) ?? [];
-    events.push(label);
-    eventMap.set(time, events);
-  };
-  data.episodes.forEach((episode) => addEvent(episode.entryTime, `${episode.side === "long" ? "Long" : "Short"} episode`));
-  data.hftEvents.forEach((event) => addEvent(event.time, `1s fill +${event.improvementPct.toFixed(4)}%`));
-  data.mfeEvents.forEach((event) => addEvent(event.time, `MFE ${event.action.toLowerCase()}`));
-
   const signedPercent = (value, digits = 2) => {
     if (!Number.isFinite(value)) return "—";
     const sign = value > 0 ? "+" : value < 0 ? "−" : "";
     return `${sign}${Math.abs(value).toFixed(digits)}%`;
   };
 
-  const plainPercent = (value, digits = 2) => {
-    if (!Number.isFinite(value)) return "—";
-    return `${value.toFixed(digits)}%`;
-  };
-
-  const numeric = (value, digits = 2) => Number(value).toFixed(digits);
-  const utcLabel = (time) => {
-    if (typeof time !== "number") return "—";
-    return new Date(time * 1000).toISOString().replace("T", " ").slice(0, 16);
-  };
-
-  const money = new Intl.NumberFormat("en-US", {
-    style: "currency",
-    currency: "USD",
-    maximumFractionDigits: 0,
-  });
+  const plainPercent = (value, digits = 0) => Number.isFinite(value) ? `${value.toFixed(digits)}%` : "—";
+  const utcLabel = (time) => typeof time === "number"
+    ? new Date(time * 1000).toISOString().replace("T", " ").slice(0, 16)
+    : "—";
+  const dateLabel = (time) => new Date(time * 1000).toISOString().slice(0, 10);
+  const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
   const setText = (selector, value) => {
     document.querySelectorAll(selector).forEach((element) => {
@@ -73,12 +54,12 @@
 
   const metricBindings = {
     netReturn: signedPercent(data.metrics.netReturnPct),
+    grossReturn: signedPercent(data.metrics.grossReturnPct),
     benchmarkReturn: signedPercent(data.metrics.benchmarkReturnPct),
     maxDrawdown: signedPercent(data.metrics.maxDrawdownPct),
-    sharpe: numeric(data.metrics.sharpe),
+    sharpe: Number(data.metrics.sharpe).toFixed(2),
     episodes: String(data.metrics.episodes),
-    episodeSplit: `${data.metrics.longEpisodes} long · ${data.metrics.shortEpisodes} short`,
-    grossReturn: signedPercent(data.metrics.grossReturnPct),
+    episodeSplit: `${data.metrics.longEpisodes}L / ${data.metrics.shortEpisodes}S`,
     longMedian: signedPercent(data.metrics.longMedianPct),
     shortMedian: signedPercent(data.metrics.shortMedianPct),
   };
@@ -89,10 +70,6 @@
     state0Asym1: data.ablation.state0Asym1,
     state1Asym0: data.ablation.state1Asym0,
     state1Asym1: data.ablation.state1Asym1,
-    interaction: data.ablation.interactionPct,
-    withoutState: data.ablation.variants.find((row) => row.key === "withoutState").returnPct,
-    withoutBadShort: data.ablation.variants.find((row) => row.key === "withoutBadShort").returnPct,
-    parent: data.overlay.parentReturnPct,
   };
   Object.entries(ablationBindings).forEach(([key, value]) => setText(`[data-ablation="${key}"]`, signedPercent(value)));
 
@@ -101,29 +78,38 @@
     mfeOnly: data.overlay.mfeOnlyPct,
     hftOnly: data.overlay.hftOnlyPct,
     comboReturn: data.overlay.comboPct,
-    mfeDelta: data.overlay.mfeDifferencePct,
-    hftDelta: data.overlay.hftDifferencePct,
-    comboDelta: data.overlay.comboDifferencePct,
     hftImprove: data.execution.meanSelectedPriceImprovementPct,
   };
   Object.entries(moduleBindings).forEach(([key, value]) => {
-    const digits = key === "hftImprove" ? 4 : 2;
-    setText(`[data-module="${key}"]`, signedPercent(value, digits));
+    setText(`[data-module="${key}"]`, signedPercent(value, key === "hftImprove" ? 4 : 2));
   });
+  setText('[data-execution="overrides"]', String(data.execution.overrides));
 
-  const grossWidth = 100;
-  const netWidth = Math.max(0, Math.min(100, data.metrics.netReturnPct / data.metrics.grossReturnPct * 100));
-  document.querySelector("#grossBar").style.width = `${grossWidth}%`;
-  document.querySelector("#netBar").style.width = `${netWidth}%`;
+  const eventMap = new Map();
+  const addEvent = (time, label) => {
+    const events = eventMap.get(time) ?? [];
+    if (!events.includes(label)) events.push(label);
+    eventMap.set(time, events);
+  };
 
-  const baseChartOptions = (height) => ({
+  data.episodes.forEach((episode) => {
+    const code = episode.side === "long" ? "L" : "S";
+    addEvent(episode.entryTime, `${code}:ENTRY`);
+    addEvent(episode.exitTime, `${code}:${episode.closed ? "EXIT" : "OPEN"}`);
+  });
+  data.trades.forEach((trade) => addEvent(trade.time, `${trade.action}:${trade.kind.toUpperCase()} ${signedPercent(trade.deltaPct, 1)}`));
+  data.stateEvents.forEach((event) => addEvent(event.time, `STATE:${event.action.toUpperCase()}`));
+  data.hftEvents.forEach((event) => addEvent(event.time, `1S:${signedPercent(event.improvementPct, 4)}`));
+  data.mfeEvents.forEach((event) => addEvent(event.time, `MFE:${event.action.toUpperCase().replaceAll(" ", "_")}`));
+
+  const baseChartOptions = () => ({
     width: 0,
-    height,
+    height: 0,
     layout: {
       background: { type: "solid", color: palette.background },
       textColor: palette.text,
-      fontFamily: 'Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-      fontSize: 11,
+      fontFamily: palette.mono,
+      fontSize: 10,
     },
     grid: {
       vertLines: { color: palette.grid },
@@ -131,20 +117,20 @@
     },
     crosshair: {
       mode: charts.CrosshairMode.Normal,
-      vertLine: { color: "rgba(72, 215, 255, 0.42)", labelBackgroundColor: "#153555" },
-      horzLine: { color: "rgba(72, 215, 255, 0.24)", labelBackgroundColor: "#153555" },
+      vertLine: { color: "rgba(201, 255, 61, 0.42)", width: 1, labelBackgroundColor: "#2a3810" },
+      horzLine: { color: "rgba(201, 255, 61, 0.20)", width: 1, labelBackgroundColor: "#2a3810" },
     },
     rightPriceScale: {
       borderColor: palette.border,
-      scaleMargins: { top: 0.08, bottom: 0.08 },
+      scaleMargins: { top: 0.14, bottom: 0.08 },
     },
     timeScale: {
       borderColor: palette.border,
       timeVisible: true,
       secondsVisible: false,
-      rightOffset: 3,
-      barSpacing: 7,
-      minBarSpacing: 0.08,
+      rightOffset: 2,
+      barSpacing: 13,
+      minBarSpacing: 0.35,
     },
     handleScroll: {
       mouseWheel: true,
@@ -157,19 +143,21 @@
       mouseWheel: true,
       pinch: true,
     },
-    localization: {
-      locale: "en-US",
-    },
+    localization: { locale: "en-US" },
   });
 
-  const createResponsiveChart = (element, options) => {
+  const createResponsiveChart = (element, extra = {}) => {
     const chart = charts.createChart(element, {
-      ...options,
-      width: Math.max(320, element.clientWidth),
+      ...baseChartOptions(),
+      ...extra,
+      width: Math.max(280, element.clientWidth),
+      height: Math.max(80, element.clientHeight),
     });
     const observer = new ResizeObserver((entries) => {
-      const width = Math.floor(entries[0].contentRect.width);
-      if (width > 0) chart.applyOptions({ width });
+      const box = entries[0].contentRect;
+      const width = Math.floor(box.width);
+      const height = Math.floor(box.height);
+      if (width > 0 && height > 0) chart.resize(width, height);
     });
     observer.observe(element);
     return { chart, observer };
@@ -177,16 +165,21 @@
 
   const priceElement = document.querySelector("#priceChart");
   const positionElement = document.querySelector("#positionChart");
-  const priceRuntime = createResponsiveChart(priceElement, baseChartOptions(540));
+  const priceRuntime = createResponsiveChart(priceElement);
   const positionRuntime = createResponsiveChart(positionElement, {
-    ...baseChartOptions(150),
-    timeScale: {
-      ...baseChartOptions(150).timeScale,
-      visible: true,
-    },
     rightPriceScale: {
       borderColor: palette.border,
       scaleMargins: { top: 0.04, bottom: 0.04 },
+    },
+    timeScale: {
+      ...baseChartOptions().timeScale,
+      visible: true,
+      barSpacing: 13,
+    },
+    crosshair: {
+      mode: charts.CrosshairMode.Normal,
+      vertLine: { color: "rgba(201, 255, 61, 0.28)", labelBackgroundColor: "#2a3810" },
+      horzLine: { color: "rgba(201, 255, 61, 0.14)", labelBackgroundColor: "#2a3810" },
     },
   });
 
@@ -195,8 +188,8 @@
     downColor: palette.red,
     borderUpColor: palette.green,
     borderDownColor: palette.red,
-    wickUpColor: "rgba(53, 239, 173, 0.82)",
-    wickDownColor: "rgba(255, 92, 128, 0.82)",
+    wickUpColor: "rgba(47, 240, 164, 0.82)",
+    wickDownColor: "rgba(255, 77, 115, 0.84)",
     priceLineVisible: false,
     lastValueVisible: true,
   });
@@ -211,104 +204,247 @@
     },
     priceLineVisible: false,
     lastValueVisible: true,
-    autoscaleInfoProvider: () => ({
-      priceRange: { minValue: -100, maxValue: 100 },
-    }),
+    autoscaleInfoProvider: () => ({ priceRange: { minValue: -100, maxValue: 100 } }),
   });
-  positionSeries.setData(data.positions);
+  positionSeries.setData(data.positions.map((row) => ({
+    ...row,
+    color: row.value > epsilon
+      ? "rgba(47, 240, 164, 0.70)"
+      : row.value < -epsilon
+        ? "rgba(255, 77, 115, 0.68)"
+        : "rgba(88, 108, 123, 0.22)",
+  })));
 
-  const syncTimeScales = (leftChart, rightChart) => {
-    let syncing = false;
-    const sync = (source, target) => {
-      source.timeScale().subscribeVisibleTimeRangeChange((range) => {
-        if (!range || syncing) return;
-        syncing = true;
-        target.timeScale().setVisibleRange(range);
-        syncing = false;
-      });
-    };
-    sync(leftChart, rightChart);
-    sync(rightChart, leftChart);
+  let tapeSyncing = false;
+  const mirrorTimeScale = (source, target) => {
+    source.timeScale().subscribeVisibleTimeRangeChange((range) => {
+      if (!range || tapeSyncing) return;
+      tapeSyncing = true;
+      target.timeScale().setVisibleRange(range);
+      tapeSyncing = false;
+    });
   };
-  syncTimeScales(priceRuntime.chart, positionRuntime.chart);
+  mirrorTimeScale(priceRuntime.chart, positionRuntime.chart);
+  mirrorTimeScale(positionRuntime.chart, priceRuntime.chart);
 
-  const markerState = { entries: true, hft: true, mfe: true };
+  const layerState = { lifecycles: true, trades: true, state: true, hft: true, mfe: true };
+  const stateCode = (action) => action === "reduce" ? "R" : action === "restore" ? "RS" : "X";
   const markerGroups = {
-    entries: data.episodes.map((episode) => ({
-      time: episode.entryTime,
-      position: episode.side === "long" ? "belowBar" : "aboveBar",
-      color: episode.side === "long" ? palette.green : palette.red,
-      shape: episode.side === "long" ? "arrowUp" : "arrowDown",
-      size: 0.7,
+    trades: data.trades.map((trade) => ({
+      time: trade.time,
+      position: trade.action === "B" ? "belowBar" : "aboveBar",
+      color: trade.action === "B" ? palette.green : palette.red,
+      shape: "circle",
+      text: trade.action,
+      size: trade.boundary === "internal" ? 0.34 : 1.18,
+    })),
+    state: data.stateEvents.map((event) => ({
+      time: event.time,
+      position: event.side === "short" ? "belowBar" : "aboveBar",
+      color: palette.amber,
+      shape: "square",
+      text: stateCode(event.action),
+      size: 0.62,
     })),
     hft: data.hftEvents.map((event) => ({
       time: event.time,
       position: event.side === "long" ? "belowBar" : "aboveBar",
       color: palette.cyan,
       shape: "circle",
-      size: 0.65,
+      text: "1S",
+      size: 0.56,
     })),
     mfe: data.mfeEvents.map((event) => ({
       time: event.time,
       position: event.side === "long" ? "aboveBar" : "belowBar",
       color: palette.amber,
       shape: "square",
-      text: event.action === "Reduce 50%" ? "MFE 50%" : "MFE exit",
-      size: 0.65,
+      text: event.action === "Reduce 50%" ? "M50" : "MX",
+      size: 0.72,
     })),
   };
 
   const refreshMarkers = () => {
-    const markers = Object.entries(markerGroups)
-      .filter(([key]) => markerState[key])
-      .flatMap(([, rows]) => rows)
+    const markers = ["trades", "state", "hft", "mfe"]
+      .filter((key) => layerState[key])
+      .flatMap((key) => markerGroups[key])
       .sort((left, right) => left.time - right.time);
     candleSeries.setMarkers(markers);
   };
   refreshMarkers();
 
-  document.querySelectorAll("[data-marker]").forEach((button) => {
+  const overlay = document.querySelector("#lifecycleOverlay");
+  let overlayFrame = 0;
+  const queueLifecycleOverlay = () => {
+    cancelAnimationFrame(overlayFrame);
+    overlayFrame = requestAnimationFrame(drawLifecycleOverlay);
+  };
+
+  function drawLifecycleOverlay() {
+    const width = priceElement.clientWidth;
+    const height = priceElement.clientHeight;
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    if (!width || !height) return;
+    if (overlay.width !== Math.floor(width * dpr) || overlay.height !== Math.floor(height * dpr)) {
+      overlay.width = Math.floor(width * dpr);
+      overlay.height = Math.floor(height * dpr);
+    }
+    const context = overlay.getContext("2d");
+    context.setTransform(dpr, 0, 0, dpr, 0, 0);
+    context.clearRect(0, 0, width, height);
+    if (!layerState.lifecycles) return;
+
+    const visible = priceRuntime.chart.timeScale().getVisibleRange();
+    if (!visible) return;
+    const plotRight = Math.max(0, width - 72);
+    const plotBottom = Math.max(40, height - 27);
+    const bandTop = 8;
+    const bandHeight = 11;
+
+    for (const episode of data.episodes) {
+      const episodeEnd = episode.exitTime + data.meta.barIntervalSeconds;
+      if (episodeEnd < visible.from || episode.entryTime > visible.to) continue;
+
+      const startVisible = episode.entryTime <= visible.from;
+      const endVisible = episodeEnd >= visible.to;
+      const rawStart = startVisible ? 0 : priceRuntime.chart.timeScale().timeToCoordinate(episode.entryTime);
+      const rawEnd = endVisible ? plotRight : priceRuntime.chart.timeScale().timeToCoordinate(episodeEnd);
+      const x0 = Math.max(0, Math.min(plotRight, Number.isFinite(rawStart) ? rawStart : 0));
+      const x1 = Math.max(0, Math.min(plotRight, Number.isFinite(rawEnd) ? rawEnd : plotRight));
+      if (x1 <= x0) continue;
+
+      const long = episode.side === "long";
+      const stroke = long ? palette.green : palette.red;
+      const fill = long ? "rgba(47, 240, 164, 0.27)" : "rgba(255, 77, 115, 0.27)";
+      const wash = long ? "rgba(47, 240, 164, 0.018)" : "rgba(255, 77, 115, 0.018)";
+      const span = x1 - x0;
+
+      context.fillStyle = wash;
+      context.fillRect(x0, bandTop + bandHeight, span, Math.max(0, plotBottom - bandTop - bandHeight));
+      context.fillStyle = fill;
+      context.fillRect(x0, bandTop, span, bandHeight);
+      context.strokeStyle = stroke;
+      context.lineWidth = episode.closed ? 1 : 1.5;
+      context.setLineDash(episode.closed ? [] : [4, 3]);
+      context.strokeRect(x0 + 0.5, bandTop + 0.5, Math.max(0, span - 1), bandHeight - 1);
+
+      const entryY = candleSeries.priceToCoordinate(episode.entryPrice);
+      if (Number.isFinite(entryY) && entryY > bandTop + bandHeight + 4 && entryY < plotBottom) {
+        context.strokeStyle = long ? "rgba(47, 240, 164, 0.48)" : "rgba(255, 77, 115, 0.48)";
+        context.lineWidth = 1;
+        context.setLineDash([5, 5]);
+        context.beginPath();
+        context.moveTo(x0, entryY + 0.5);
+        context.lineTo(x1, entryY + 0.5);
+        context.stroke();
+      }
+
+      context.setLineDash([]);
+      if (span > 32) {
+        const state = episode.closed ? signedPercent(episode.pnlPct, 2) : `OPEN ${signedPercent(episode.pnlPct, 2)}`;
+        const label = `${long ? "L" : "S"} ${state}`;
+        context.save();
+        context.beginPath();
+        context.rect(x0 + 2, bandTop - 1, Math.max(0, span - 4), bandHeight + 2);
+        context.clip();
+        context.fillStyle = stroke;
+        context.font = `500 9px ${palette.mono}`;
+        context.textBaseline = "middle";
+        context.fillText(label, x0 + 5, bandTop + bandHeight / 2 + 0.5);
+        context.restore();
+      }
+    }
+  }
+
+  document.querySelectorAll("[data-layer]").forEach((button) => {
     button.addEventListener("click", () => {
-      const key = button.dataset.marker;
-      markerState[key] = !markerState[key];
-      button.classList.toggle("active", markerState[key]);
-      button.setAttribute("aria-pressed", String(markerState[key]));
-      refreshMarkers();
+      const layer = button.dataset.layer;
+      layerState[layer] = !layerState[layer];
+      button.classList.toggle("active", layerState[layer]);
+      button.setAttribute("aria-pressed", String(layerState[layer]));
+      if (layer === "lifecycles") queueLifecycleOverlay();
+      else refreshMarkers();
     });
-    button.setAttribute("aria-pressed", "true");
   });
 
-  const setVisibleDays = (days) => {
-    if (days === "all") {
+  let activeDuration = 30 * day;
+  let activeWindow = "30";
+  let applyingWindow = false;
+  const pan = document.querySelector("#tapePan");
+  const windowLabel = document.querySelector("#windowLabel");
+
+  const setWindowLabel = (from, to) => {
+    const days = Math.max(1, Math.round((to - from) / day));
+    windowLabel.textContent = `WINDOW / ${dateLabel(from)} → ${dateLabel(to)} / ${days}D`;
+  };
+
+  const applyWindowAt = (ratio = 1) => {
+    if (activeWindow === "all") {
+      applyingWindow = true;
       priceRuntime.chart.timeScale().fitContent();
-      positionRuntime.chart.timeScale().fitContent();
+      applyingWindow = false;
+      pan.disabled = true;
+      windowLabel.textContent = `WINDOW / ${dateLabel(data.meta.start)} → ${dateLabel(data.meta.end)} / ALL`;
+      queueLifecycleOverlay();
       return;
     }
-    const end = data.meta.end;
-    const range = { from: end - Number(days) * 86400, to: end + 3 * 4 * 3600 };
-    priceRuntime.chart.timeScale().setVisibleRange(range);
-    positionRuntime.chart.timeScale().setVisibleRange(range);
+
+    pan.disabled = false;
+    const duration = Math.min(activeDuration, data.meta.end - data.meta.start);
+    const maxFrom = data.meta.end - duration;
+    const from = data.meta.start + Math.max(0, Math.min(1, ratio)) * Math.max(0, maxFrom - data.meta.start);
+    const to = from + duration;
+    applyingWindow = true;
+    priceRuntime.chart.timeScale().setVisibleRange({ from, to });
+    applyingWindow = false;
+    setWindowLabel(from, to);
+    queueLifecycleOverlay();
   };
 
-  document.querySelectorAll("[data-range]").forEach((button) => {
+  document.querySelectorAll("[data-window]").forEach((button) => {
     button.addEventListener("click", () => {
-      document.querySelectorAll("[data-range]").forEach((candidate) => candidate.classList.remove("active"));
-      button.classList.add("active");
-      setVisibleDays(button.dataset.range);
+      document.querySelectorAll("[data-window]").forEach((candidate) => {
+        const selected = candidate === button;
+        candidate.classList.toggle("active", selected);
+        candidate.setAttribute("aria-pressed", String(selected));
+      });
+      activeWindow = button.dataset.window;
+      if (activeWindow !== "all") activeDuration = Number(activeWindow) * day;
+      pan.value = "1000";
+      applyWindowAt(1);
     });
   });
-  setVisibleDays(365);
 
-  const updateDecisionReadout = (time, candle, position) => {
-    if (typeof time !== "number" || !candle || !position) return;
-    document.querySelector("#readoutTime").textContent = `${utcLabel(time)} UTC`;
+  pan.addEventListener("input", () => applyWindowAt(Number(pan.value) / 1000));
+
+  priceRuntime.chart.timeScale().subscribeVisibleTimeRangeChange((range) => {
+    if (!range) return;
+    queueLifecycleOverlay();
+    if (applyingWindow || activeWindow === "all") return;
+    activeDuration = Math.max(data.meta.barIntervalSeconds, range.to - range.from);
+    const maxFrom = data.meta.end - activeDuration;
+    const denominator = Math.max(1, maxFrom - data.meta.start);
+    const ratio = Math.max(0, Math.min(1, (range.from - data.meta.start) / denominator));
+    pan.value = String(Math.round(ratio * 1000));
+    setWindowLabel(range.from, range.to);
+  });
+
+  const updateDecisionReadout = (time) => {
+    const candle = candleByTime.get(time);
+    const position = positionByTime.get(time);
+    if (!candle || !position) return;
+    document.querySelector("#readoutTime").textContent = `${utcLabel(time)}Z`;
     document.querySelector("#readoutClose").textContent = money.format(candle.close);
     document.querySelector("#readoutPosition").textContent = signedPercent(position.value, 1);
-    document.querySelector("#readoutState").textContent = position.value > 0.01 ? "Long" : position.value < -0.01 ? "Short" : "Flat";
-    document.querySelector("#readoutEvents").textContent = (eventMap.get(time) ?? ["No discrete event"]).join(" · ");
+    document.querySelector("#readoutState").textContent = position.value > epsilon ? "LONG" : position.value < -epsilon ? "SHORT" : "FLAT";
+    const events = eventMap.get(time) ?? [];
+    const visibleEvents = events.slice(0, 4);
+    document.querySelector("#readoutEvents").textContent = visibleEvents.length
+      ? `${visibleEvents.join(" / ")}${events.length > visibleEvents.length ? ` / +${events.length - visibleEvents.length}` : ""}`
+      : "NO_DISCRETE_EVENT";
   };
 
-  const crosshairSync = (sourceChart, targetChart, sourceSeries, targetSeries, targetMap, callback) => {
+  const syncCrosshair = (sourceChart, targetChart, sourceSeries, targetSeries, targetMap) => {
     sourceChart.subscribeCrosshairMove((param) => {
       if (typeof param.time !== "number") {
         targetChart.clearCrosshairPosition();
@@ -316,48 +452,33 @@
       }
       const sourceRow = param.seriesData.get(sourceSeries);
       const targetRow = targetMap.get(param.time);
-      if (sourceRow && targetRow) {
-        targetChart.setCrosshairPosition(targetRow.value ?? targetRow.close, param.time, targetSeries);
-        callback(param.time);
-      }
+      if (!sourceRow || !targetRow) return;
+      targetChart.setCrosshairPosition(targetRow.value ?? targetRow.close, param.time, targetSeries);
+      updateDecisionReadout(param.time);
     });
   };
-
-  crosshairSync(priceRuntime.chart, positionRuntime.chart, candleSeries, positionSeries, positionByTime, (time) => {
-    updateDecisionReadout(time, candleByTime.get(time), positionByTime.get(time));
-  });
-  crosshairSync(positionRuntime.chart, priceRuntime.chart, positionSeries, candleSeries, candleByTime, (time) => {
-    updateDecisionReadout(time, candleByTime.get(time), positionByTime.get(time));
-  });
+  syncCrosshair(priceRuntime.chart, positionRuntime.chart, candleSeries, positionSeries, positionByTime);
+  syncCrosshair(positionRuntime.chart, priceRuntime.chart, positionSeries, candleSeries, candleByTime);
 
   const equityElement = document.querySelector("#equityChart");
   const drawdownElement = document.querySelector("#drawdownChart");
   const equityRuntime = createResponsiveChart(equityElement, {
-    ...baseChartOptions(430),
-    rightPriceScale: {
-      borderColor: palette.border,
-      scaleMargins: { top: 0.09, bottom: 0.08 },
-    },
+    rightPriceScale: { borderColor: palette.border, scaleMargins: { top: 0.08, bottom: 0.07 } },
   });
   const drawdownRuntime = createResponsiveChart(drawdownElement, {
-    ...baseChartOptions(160),
-    rightPriceScale: {
-      borderColor: palette.border,
-      scaleMargins: { top: 0.08, bottom: 0.08 },
-    },
+    rightPriceScale: { borderColor: palette.border, scaleMargins: { top: 0.08, bottom: 0.08 } },
   });
-
-  const percentPriceFormat = {
+  const percentFormat = {
     type: "custom",
     minMove: 0.01,
     formatter: (value) => plainPercent(value, 0),
   };
   const strategySeries = equityRuntime.chart.addAreaSeries({
-    lineColor: palette.green,
-    topColor: "rgba(53, 239, 173, 0.24)",
-    bottomColor: "rgba(53, 239, 173, 0.015)",
+    lineColor: palette.acid,
+    topColor: "rgba(201, 255, 61, 0.16)",
+    bottomColor: "rgba(201, 255, 61, 0.006)",
     lineWidth: 2,
-    priceFormat: percentPriceFormat,
+    priceFormat: percentFormat,
     priceLineVisible: false,
     lastValueVisible: true,
   });
@@ -365,24 +486,24 @@
     color: palette.benchmark,
     lineWidth: 1,
     lineStyle: charts.LineStyle.Dashed,
-    priceFormat: percentPriceFormat,
+    priceFormat: percentFormat,
     priceLineVisible: false,
     lastValueVisible: true,
   });
   const drawdownSeries = drawdownRuntime.chart.addAreaSeries({
     lineColor: palette.red,
-    topColor: "rgba(255, 92, 128, 0.03)",
-    bottomColor: "rgba(255, 92, 128, 0.28)",
+    topColor: "rgba(255, 77, 115, 0.01)",
+    bottomColor: "rgba(255, 77, 115, 0.24)",
     lineWidth: 1,
-    priceFormat: percentPriceFormat,
+    priceFormat: percentFormat,
     priceLineVisible: false,
     lastValueVisible: true,
   });
-
   strategySeries.setData(data.equity);
   benchmarkSeries.setData(data.benchmark);
   drawdownSeries.setData(data.drawdown);
-  syncTimeScales(equityRuntime.chart, drawdownRuntime.chart);
+  mirrorTimeScale(equityRuntime.chart, drawdownRuntime.chart);
+  mirrorTimeScale(drawdownRuntime.chart, equityRuntime.chart);
   equityRuntime.chart.timeScale().fitContent();
   drawdownRuntime.chart.timeScale().fitContent();
 
@@ -391,19 +512,39 @@
     const benchmark = benchmarkByTime.get(time);
     const drawdown = drawdownByTime.get(time);
     if (!strategy || !benchmark || !drawdown) return;
-    document.querySelector("#equityReadout").textContent = `${utcLabel(time)} UTC · Strategy ${signedPercent(strategy.value)} · BTC ${signedPercent(benchmark.value)} · Drawdown ${signedPercent(drawdown.value)}`;
+    document.querySelector("#equityReadout").textContent = `${utcLabel(time)}Z // C1 ${signedPercent(strategy.value)} // BTC ${signedPercent(benchmark.value)} // DD ${signedPercent(drawdown.value)}`;
   };
 
-  crosshairSync(equityRuntime.chart, drawdownRuntime.chart, strategySeries, drawdownSeries, drawdownByTime, updateEquityReadout);
-  crosshairSync(drawdownRuntime.chart, equityRuntime.chart, drawdownSeries, strategySeries, equityByTime, updateEquityReadout);
+  const syncEquityCrosshair = (sourceChart, targetChart, sourceSeries, targetSeries, targetMap) => {
+    sourceChart.subscribeCrosshairMove((param) => {
+      if (typeof param.time !== "number") {
+        targetChart.clearCrosshairPosition();
+        return;
+      }
+      const sourceRow = param.seriesData.get(sourceSeries);
+      const targetRow = targetMap.get(param.time);
+      if (!sourceRow || !targetRow) return;
+      targetChart.setCrosshairPosition(targetRow.value, param.time, targetSeries);
+      updateEquityReadout(param.time);
+    });
+  };
+  syncEquityCrosshair(equityRuntime.chart, drawdownRuntime.chart, strategySeries, drawdownSeries, drawdownByTime);
+  syncEquityCrosshair(drawdownRuntime.chart, equityRuntime.chart, drawdownSeries, strategySeries, equityByTime);
 
   const ablationRoot = document.querySelector("#ablationChart");
   const maxAblation = Math.max(...data.ablation.variants.map((variant) => variant.returnPct));
+  const ablationLabel = {
+    full: "FULL.SYSTEM",
+    parent: "PARENT.ONLY",
+    withoutBadShort: "− BAD_SHORT.VETO",
+    withoutSideAsym: "− SIDE.ASYMMETRY",
+    withoutState: "− MARKET.STATE",
+    withoutBullCap: "− BULL.CAP",
+  };
   data.ablation.variants.forEach((variant) => {
     const row = document.createElement("div");
     row.className = `ablation-row ${variant.status === "best" ? "best" : ""} ${variant.status === "unstable" ? "unstable" : ""}`.trim();
-    const suffix = variant.status === "unstable" ? " *" : "";
-    row.innerHTML = `<span class="ablation-label">${variant.label}${suffix}</span><span class="ablation-track"><i style="width:${(variant.returnPct / maxAblation * 100).toFixed(2)}%"></i></span><strong class="ablation-value">${signedPercent(variant.returnPct)}</strong>`;
+    row.innerHTML = `<span class="ablation-label">${ablationLabel[variant.key] ?? variant.label.toUpperCase()}</span><span class="ablation-track"><i style="width:${(variant.returnPct / maxAblation * 100).toFixed(2)}%"></i></span><strong class="ablation-value">${signedPercent(variant.returnPct)}</strong>`;
     ablationRoot.appendChild(row);
   });
 
@@ -411,96 +552,97 @@
     const canvas = document.querySelector("#episodeDistribution");
     const rect = canvas.getBoundingClientRect();
     const dpr = Math.max(1, window.devicePixelRatio || 1);
-    canvas.width = Math.floor(rect.width * dpr);
-    canvas.height = Math.floor(rect.height * dpr);
+    canvas.width = Math.max(1, Math.floor(rect.width * dpr));
+    canvas.height = Math.max(1, Math.floor(rect.height * dpr));
     const context = canvas.getContext("2d");
     context.setTransform(dpr, 0, 0, dpr, 0, 0);
     context.clearRect(0, 0, rect.width, rect.height);
 
-    const margin = { top: 18, right: 18, bottom: 42, left: 42 };
-    const width = rect.width - margin.left - margin.right;
-    const height = rect.height - margin.top - margin.bottom;
+    const margin = { top: 10, right: 12, bottom: 30, left: 34 };
+    const width = Math.max(1, rect.width - margin.left - margin.right);
+    const height = Math.max(1, rect.height - margin.top - margin.bottom);
     const min = -5;
     const max = 12;
     const step = 1;
-    const bins = Array.from({ length: Math.round((max - min) / step) }, (_, index) => min + index * step);
+    const bins = Array.from({ length: max - min }, (_, index) => min + index);
+    const closed = data.episodes.filter((episode) => episode.closed);
     const sides = ["long", "short"];
     const counts = Object.fromEntries(sides.map((side) => [side, Array(bins.length).fill(0)]));
-    const totals = Object.fromEntries(sides.map((side) => [side, data.episodes.filter((episode) => episode.side === side).length]));
+    const totals = Object.fromEntries(sides.map((side) => [side, closed.filter((episode) => episode.side === side).length]));
 
-    data.episodes.forEach((episode) => {
+    closed.forEach((episode) => {
       const clipped = Math.min(max - Number.EPSILON, Math.max(min, episode.pnlPct));
-      const index = Math.min(bins.length - 1, Math.max(0, Math.floor((clipped - min) / step)));
+      const index = Math.max(0, Math.min(bins.length - 1, Math.floor((clipped - min) / step)));
       counts[episode.side][index] += 1;
     });
 
-    const densities = Object.fromEntries(sides.map((side) => [side, counts[side].map((value) => value / totals[side] * 100)]));
-    const yMax = Math.max(5, Math.ceil(Math.max(...densities.long, ...densities.short) / 5) * 5);
+    const density = Object.fromEntries(sides.map((side) => [side, counts[side].map((value) => value / totals[side] * 100)]));
+    const yMax = Math.max(5, Math.ceil(Math.max(...density.long, ...density.short) / 5) * 5);
     const x = (value) => margin.left + (value - min) / (max - min) * width;
     const y = (value) => margin.top + height - value / yMax * height;
 
-    context.strokeStyle = "rgba(133, 183, 255, 0.13)";
-    context.fillStyle = palette.text;
-    context.font = '10px Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif';
-    context.textAlign = "right";
+    context.font = `9px ${palette.mono}`;
     context.textBaseline = "middle";
+    context.textAlign = "right";
     for (let tick = 0; tick <= yMax; tick += 5) {
+      context.strokeStyle = palette.grid;
       context.beginPath();
       context.moveTo(margin.left, y(tick));
       context.lineTo(margin.left + width, y(tick));
       context.stroke();
-      context.fillText(`${tick}%`, margin.left - 8, y(tick));
+      context.fillStyle = palette.text;
+      context.fillText(`${tick}%`, margin.left - 6, y(tick));
     }
 
-    const zeroX = x(0);
-    context.strokeStyle = "rgba(255, 255, 255, 0.3)";
+    context.strokeStyle = palette.lineHot;
     context.beginPath();
-    context.moveTo(zeroX, margin.top);
-    context.lineTo(zeroX, margin.top + height);
+    context.moveTo(x(0), margin.top);
+    context.lineTo(x(0), margin.top + height);
     context.stroke();
 
     const slot = width / bins.length;
-    const barWidth = Math.max(3, slot * 0.34);
+    const barWidth = Math.max(2, slot * 0.34);
     bins.forEach((bin, index) => {
       const center = x(bin + step / 2);
-      const longHeight = margin.top + height - y(densities.long[index]);
-      const shortHeight = margin.top + height - y(densities.short[index]);
-      context.fillStyle = "rgba(53, 239, 173, 0.78)";
-      context.fillRect(center - barWidth - 1, y(densities.long[index]), barWidth, longHeight);
-      context.fillStyle = "rgba(255, 92, 128, 0.74)";
-      context.fillRect(center + 1, y(densities.short[index]), barWidth, shortHeight);
+      const longHeight = margin.top + height - y(density.long[index]);
+      const shortHeight = margin.top + height - y(density.short[index]);
+      context.fillStyle = "rgba(47, 240, 164, 0.72)";
+      context.fillRect(center - barWidth - 1, y(density.long[index]), barWidth, longHeight);
+      context.fillStyle = "rgba(255, 77, 115, 0.68)";
+      context.fillRect(center + 1, y(density.short[index]), barWidth, shortHeight);
     });
 
     context.fillStyle = palette.text;
     context.textAlign = "center";
     context.textBaseline = "top";
-    [-5, 0, 5, 10, 12].forEach((tick) => {
-      context.fillText(`${tick > 0 ? "+" : ""}${tick}%`, x(tick), margin.top + height + 12);
-    });
+    [-5, 0, 5, 10].forEach((tick) => context.fillText(`${tick > 0 ? "+" : ""}${tick}%`, x(tick), margin.top + height + 10));
   };
 
   drawEpisodeDistribution();
-  const distributionObserver = new ResizeObserver(() => window.requestAnimationFrame(drawEpisodeDistribution));
+  const distributionObserver = new ResizeObserver(() => requestAnimationFrame(drawEpisodeDistribution));
   distributionObserver.observe(document.querySelector("#episodeDistribution"));
+  const overlayObserver = new ResizeObserver(queueLifecycleOverlay);
+  overlayObserver.observe(priceElement);
+
+  applyWindowAt(1);
+  queueLifecycleOverlay();
 
   if (window.location.hash) {
     try {
       const target = document.querySelector(window.location.hash);
-      if (target) {
-        window.requestAnimationFrame(() => {
-          window.requestAnimationFrame(() => target.scrollIntoView({ block: "start", behavior: "auto" }));
-        });
-      }
+      if (target) requestAnimationFrame(() => target.scrollIntoView({ block: "start", behavior: "auto" }));
     } catch {
-      // Ignore malformed URL fragments; the report remains fully usable.
+      // Keep the console usable when a fragment is malformed.
     }
   }
 
   window.addEventListener("beforeunload", () => {
+    cancelAnimationFrame(overlayFrame);
     [priceRuntime, positionRuntime, equityRuntime, drawdownRuntime].forEach((runtime) => {
       runtime.observer.disconnect();
       runtime.chart.remove();
     });
     distributionObserver.disconnect();
+    overlayObserver.disconnect();
   }, { once: true });
 })();
