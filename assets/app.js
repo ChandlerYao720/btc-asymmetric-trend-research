@@ -43,6 +43,9 @@
   const utcLabel = (time) => typeof time === "number"
     ? new Date(time * 1000).toISOString().replace("T", " ").slice(0, 16)
     : "—";
+  const compactUtcLabel = (time) => typeof time === "number"
+    ? `${new Date(time * 1000).toISOString().slice(0, 16).replace("T", "_")}Z`
+    : "—";
   const dateLabel = (time) => new Date(time * 1000).toISOString().slice(0, 10);
   const money = new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 });
 
@@ -51,6 +54,9 @@
       element.textContent = value;
     });
   };
+
+  setText("[data-run-range]", `RUN / ${compactUtcLabel(data.meta.start)} → ${compactUtcLabel(data.meta.end)}`);
+  setText("[data-evidence-updated]", `UPDATED ${utcLabel(data.meta.end)}Z / NO LIVE OR QUEUE-PARITY CLAIM`);
 
   const metricBindings = {
     netReturn: signedPercent(data.metrics.netReturnPct),
