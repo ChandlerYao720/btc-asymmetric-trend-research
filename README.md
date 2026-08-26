@@ -4,13 +4,13 @@
 
 # Systematic BTC Research & Execution Stack
 
-A public, evidence-backed portfolio of systematic BTC research: multi-horizon directional alpha, a causal five-state market-regime engine, volatility-scaled risk budgeting, a constrained walk-forward machine-learning veto, causal profit protection, and one-second microstructure research.
+An evidence-backed portfolio of systematic BTC research: multi-horizon directional alpha, a causal five-state market-regime engine, volatility-scaled risk budgeting, a constrained walk-forward machine-learning veto, causal profit protection, and one-second microstructure research.
 
 ## ▶ [CLICK TO OPEN THE INTERACTIVE STRATEGY REPLAY](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
 
 Drag or zoom through the four-hour candlestick tape, inspect the synchronized signed target, and toggle lifecycle, order, risk-state, profit-protection, and historical one-second L1 execution events.
 
-[![Systematic BTC research and execution stack](assets/preview.png?v=20260826h)](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
+[![Systematic BTC research and execution stack](assets/preview.png?v=20260826i)](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
 
 ## Quant snapshot
 
@@ -51,7 +51,7 @@ The five-state market-regime engine is separate from the classifier. It converts
 
 ## High-frequency research boundary
 
-The headline backtest is a **four-hour strategy**, not a live HFT claim. Its public execution component is a historical **one-second L1 study**:
+The headline backtest is a **four-hour strategy**, not a live HFT claim. The execution component shown here is a historical **one-second L1 study**:
 
 - 94.11% observed L1 quote coverage across executed adjustments
 - 63 event-selected execution overrides
@@ -81,7 +81,7 @@ Then open `http://127.0.0.1:8000/`.
 
 The charting runtime is vendored from [TradingView Lightweight Charts](https://github.com/tradingview/lightweight-charts) under the Apache License 2.0; the license is retained in `assets/vendor/`.
 
-## Public scope
+## Repository scope
 
 This repository contains a sanitized historical evidence snapshot and its interactive presentation layer. It does not publish the private implementation, fitted parameters, experiment registry, proprietary data contracts, or production trading infrastructure. Historical simulation only; not investment advice or a promise of future returns.
 
