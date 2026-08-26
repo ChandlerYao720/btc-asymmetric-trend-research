@@ -6,11 +6,11 @@
 
 这是一个以可核验证据为基础的系统化 BTC 量化研究作品：多周期方向信号、因果五状态市场环境引擎、波动率约束的风险预算、滚动前推机器学习否决器、因果利润保护，以及一秒级市场微观结构研究。
 
-## ▶ [点击打开中文交互式策略回放](https://chandleryao720.github.io/btc-asymmetric-trend-research/index.zh-CN.html)
+## ▶ [点击打开中文交互式策略回放](https://chandleryao720.github.io/btc-asymmetric-trend-research/index.zh-CN.html?v=20260826i)
 
 可以在四小时 K 线中拖动或缩放，查看同步的多空目标仓位，并独立显示仓位周期、调仓、风险状态、利润保护和历史一秒级 L1（Level 1，一档行情；用于还原事件时点可见的最优买卖价）成交价事件。
 
-[![系统化 BTC 研究与执行框架](assets/preview.png?v=20260826i)](https://chandleryao720.github.io/btc-asymmetric-trend-research/index.zh-CN.html)
+[![系统化 BTC 研究与执行框架](assets/preview.png?v=20260826i)](https://chandleryao720.github.io/btc-asymmetric-trend-research/index.zh-CN.html?v=20260826i)
 
 ## 量化表现概览
 

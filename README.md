@@ -6,11 +6,11 @@
 
 An evidence-backed portfolio of systematic BTC research: multi-horizon directional alpha, a causal five-state market-regime engine, volatility-scaled risk budgeting, a constrained walk-forward machine-learning veto, causal profit protection, and one-second microstructure research.
 
-## ▶ [CLICK TO OPEN THE INTERACTIVE STRATEGY REPLAY](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
+## ▶ [CLICK TO OPEN THE INTERACTIVE STRATEGY REPLAY](https://chandleryao720.github.io/btc-asymmetric-trend-research/?v=20260826i)
 
 Drag or zoom through the four-hour candlestick tape, inspect the synchronized signed target, and toggle lifecycle, order, risk-state, profit-protection, and historical one-second L1 execution events.
 
-[![Systematic BTC research and execution stack](assets/preview.png?v=20260826i)](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
+[![Systematic BTC research and execution stack](assets/preview.png?v=20260826i)](https://chandleryao720.github.io/btc-asymmetric-trend-research/?v=20260826i)
 
 ## Quant snapshot
 
