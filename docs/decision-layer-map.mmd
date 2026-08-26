@@ -1,0 +1,16 @@
+flowchart LR
+  A["01 · Multi-Horizon Trend<br/>Closed 4H bars → direction"] --> B["02 · Five-State Regime<br/>Causal state → risk context"]
+  B --> C["03 · Risk Budget<br/>State + realized volatility → bounded target"]
+  C --> D["04 · Walk-Forward ML Veto<br/>Short → flat only"]
+  D --> E["05 · Causal MFE Guard<br/>Keep / reduce / exit"]
+  E --> F["06 · Historical 1s L1 Study<br/>Selected fill price only"]
+  F --> G["07 · Real-Cost Ledger<br/>Net equity + drawdown"]
+
+  A -. "no sizing authority" .-> C
+  D -. "cannot open, flip, or enlarge" .-> E
+  F -. "cannot change side or size" .-> G
+
+  classDef active fill:#0a1219,stroke:#c9ff3d,color:#d9e5ec,stroke-width:1px;
+  classDef research fill:#0a1219,stroke:#36dcef,color:#d9e5ec,stroke-width:1px;
+  class A,B,C,D,E,G active;
+  class F research;

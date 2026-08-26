@@ -2,6 +2,7 @@
   "use strict";
 
   const data = window.BTC_SHOWCASE_DATA;
+  const verifiedMetrics = window.BTC_VERIFIED_METRICS ?? {};
   const charts = window.LightweightCharts;
 
   if (!data || !charts) {
@@ -56,18 +57,27 @@
   };
 
   setText("[data-run-range]", `RUN / ${compactUtcLabel(data.meta.start)} → ${compactUtcLabel(data.meta.end)}`);
-  setText("[data-evidence-updated]", `UPDATED ${utcLabel(data.meta.end)}Z / COST-ADJUSTED HISTORICAL REPLAY`);
+  setText("[data-evidence-updated]", `UPDATED ${utcLabel(data.meta.end)}Z · COST-ADJUSTED HISTORICAL REPLAY`);
 
   const metricBindings = {
     netReturn: signedPercent(data.metrics.netReturnPct),
     grossReturn: signedPercent(data.metrics.grossReturnPct),
     benchmarkReturn: signedPercent(data.metrics.benchmarkReturnPct),
+    annualizedReturn: signedPercent(data.metrics.annualizedReturnPct),
+    benchmarkAnnualizedReturn: signedPercent(verifiedMetrics.benchmarkAnnualizedReturnPct),
+    annualizedExcessReturn: signedPercent(verifiedMetrics.annualizedExcessReturnPct),
     maxDrawdown: signedPercent(data.metrics.maxDrawdownPct),
     sharpe: Number(data.metrics.sharpe).toFixed(2),
+    sortino: Number(data.metrics.sortino).toFixed(2),
     calmar: Number(data.metrics.calmar).toFixed(2),
     informationRatio: Number(data.metrics.informationRatio4hVsBtc1x).toFixed(2),
     episodePayoff: `${Number(data.metrics.episodePayoffRatio1x).toFixed(2)}×`,
     episodePayoffMeta: `${data.metrics.episodes} CLOSED · W/L`,
+    profitFactor: Number(data.metrics.episodeProfitFactor1x).toFixed(2),
+    winRate: plainPercent(data.metrics.winRatePct, 2),
+    episodeCount: Number(data.metrics.episodes).toLocaleString("en-US"),
+    avgHolding: `${Number(verifiedMetrics.avgHoldingDays).toFixed(2)}D`,
+    adjustments: Number(data.metrics.adjustments).toLocaleString("en-US"),
     longMedian: signedPercent(data.metrics.longMedianPct),
     shortMedian: signedPercent(data.metrics.shortMedianPct),
   };
@@ -105,6 +115,8 @@
     setText(`[data-module="${key}"]`, signedPercent(value, key === "hftImprove" ? 4 : 2));
   });
   setText('[data-execution="overrides"]', String(data.execution.overrides));
+  setText('[data-execution="coverage"]', plainPercent(data.execution.quoteCoveragePct, 2));
+  setText('[data-execution="affectedTrades"]', String(data.execution.affectedTrades));
 
   const eventMap = new Map();
   const addEvent = (time, label) => {
@@ -120,7 +132,7 @@
   });
   data.trades.forEach((trade) => addEvent(trade.time, `${trade.action}:${trade.kind.toUpperCase()} ${signedPercent(trade.deltaPct, 1)}`));
   data.stateEvents.forEach((event) => addEvent(event.time, `STATE:${event.action.toUpperCase()}`));
-  data.hftEvents.forEach((event) => addEvent(event.time, `1S:${signedPercent(event.improvementPct, 4)}`));
+  data.hftEvents.forEach((event) => addEvent(event.time, `L1PX:${signedPercent(event.improvementPct, 4)}`));
   data.mfeEvents.forEach((event) => addEvent(event.time, `MFE:${event.action.toUpperCase().replaceAll(" ", "_")}`));
 
   const baseChartOptions = () => ({
@@ -273,7 +285,7 @@
       position: event.side === "long" ? "belowBar" : "aboveBar",
       color: palette.cyan,
       shape: "circle",
-      text: "1S",
+      text: "L1",
       size: 0.56,
     })),
     mfe: data.mfeEvents.map((event) => ({

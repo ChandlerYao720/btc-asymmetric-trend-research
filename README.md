@@ -1,54 +1,73 @@
 <p align="right">
-  <strong>English</strong> | <a href="./README.zh-CN.md">简体中文</a>
+  <strong>English</strong> · <a href="./README.zh-CN.md">简体中文</a>
 </p>
 
-# BTC Asymmetric Trend Strategy
+# Systematic BTC Research & Execution Stack
 
-A cost-adjusted BTC/USDT directional strategy expressed as bounded long/short exposure. The system separates signal direction, risk allocation, short-side filtering, profit protection and execution so that every layer has a narrow, auditable responsibility.
+A public, evidence-backed portfolio of systematic BTC research: multi-horizon directional alpha, a causal five-state market-regime engine, volatility-scaled risk budgeting, a constrained walk-forward machine-learning veto, causal profit protection, and one-second microstructure research.
 
-## ▶ [CLICK HERE TO LAUNCH THE INTERACTIVE STRATEGY REPLAY](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
+## ▶ [CLICK TO OPEN THE INTERACTIVE STRATEGY REPLAY](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
 
-Drag and zoom through the four-hour candlestick history, inspect the synchronized target position, and toggle lifecycle, order, market-state, profit-guard and one-second execution events.
+Drag or zoom through the four-hour candlestick tape, inspect the synchronized signed target, and toggle lifecycle, order, risk-state, profit-protection, and historical one-second L1 execution events.
 
-[![Interactive BTC asymmetric trend strategy replay](assets/preview.png?v=20260826f)](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
+[![Systematic BTC research and execution stack](assets/preview.png?v=20260826g)](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
 
-## Strategy architecture
+## Quant snapshot
 
-| Layer | Decision | Hard boundary |
+Verified historical replay from **2024-01-01 04:00 to 2026-08-25 16:00 UTC**, constrained to **1.0× maximum exposure**.
+
+| Metric | Result | Metric | Result |
+| --- | ---: | --- | ---: |
+| Cost-adjusted cumulative return | **+358.09%** | CAGR | **+77.56%** |
+| BTC 1.0× cumulative return | +87.58% | BTC CAGR | +26.78% |
+| Annualized excess return | **+50.78%** | Maximum drawdown | **−14.34%** |
+| Sharpe ratio | 2.35 | Sortino ratio | 3.20 |
+| Calmar ratio | 5.41 | Information ratio vs BTC | 0.49 |
+| Closed-episode payoff ratio | 1.87× | Profit factor | 1.84 |
+| Closed-episode win rate | 49.65% | Closed episodes | 284 |
+| Average holding period | 2.38 days | Trade adjustments | 1,035 |
+
+The primary path deducts a **0.02% maker fee** and a **0.05% taker fee**, assumes **zero rebates**, and caps the signed target between **−100% and +100%**. The **+489.41%** gross result is retained only as a diagnostic; the headline result is the cost-adjusted path.
+
+## System design
+
+| Layer | Research function | Hard boundary |
 | --- | --- | --- |
-| **01 · Direction** | 20-, 55- and 100-bar Donchian votes on closed four-hour bars | Sets the side only |
-| **02 · Risk budget** | Market state and realized volatility determine target size | Exposure remains between −100% and +100% |
-| **03 · Short-risk veto** | A shallow walk-forward decision tree filters rebound-prone shorts | May flatten an existing short; never opens or enlarges a position |
-| **04 · Profit guard** | A time-causal maximum favorable excursion state machine reacts to profit giveback | May reduce or exit; never restores, flips or expands |
-| **05 · Execution** | Observed one-second best bid/ask may replace selected fills | Changes fill price only, not direction or size |
+| **01 · Direction** | Multi-horizon Donchian voting on closed four-hour bars | Selects long, flat, or short only |
+| **02 · Market regime** | Five-state causal engine using trend, volatility, channel, momentum, and derivatives-context families | Conditions risk; never creates direction |
+| **03 · Risk budget** | Regime-aware, volatility-scaled target sizing | Exposure remains between −100% and +100% |
+| **04 · ML risk veto** | Interpretable decision tree trained and tested through expanding-window time-forward splits | May map short to flat; never opens, flips, or enlarges |
+| **05 · Profit protection** | Causal maximum favorable excursion state machine monitors profit giveback | May reduce or exit; never restores, reverses, or expands |
+| **06 · Execution study** | Historical one-second L1 bid/ask evidence replaces selected fill prices | Changes price only; never changes side or size |
+| **07 · Cost ledger** | Explicit fee, turnover, and fill accounting | Produces the cost-adjusted equity path |
 
-## Verified replay
+The published architecture is intentionally descriptive rather than replicative. Exact factor definitions, thresholds, fitted tree rules, data joins, and production execution logic remain private.
 
-Historical replay from **2024-01-01 04:00 to 2026-08-25 16:00 UTC**, with a hard **1.0× leverage ceiling**.
+## Machine learning and market regimes
 
-| Metric | Result |
-| --- | ---: |
-| Cost-adjusted cumulative return | **+358.09%** |
-| Gross diagnostic cumulative return | +489.41% |
-| BTC buy-and-hold return | +87.58% |
-| Maximum drawdown | −14.34% |
-| Sharpe ratio | 2.35 |
-| Calmar ratio | 5.41 |
-| Information ratio vs BTC 1× | 0.49 |
-| Closed-episode payoff ratio | 1.87× |
-| Closed episodes | 284 |
-| Target exposure | −100% to +100% |
+The machine-learning component has a narrow decision mandate: classify adverse short contexts and veto exposure by mapping **short → flat**. It uses causal feature families spanning trend continuation, path quality, channel position, realized volatility, derivatives crowding, and parent-position context. Future outcomes are used only as training labels; inference uses information available at the decision timestamp.
 
-The primary path deducts a **0.02% maker fee** and a **0.05% taker fee**, uses side-specific one-second best bid/ask where evidence is available, and assumes **zero rebates**. The +489.41% C0 figure is retained as a gross diagnostic, not presented as the investable result.
+The five-state market-regime engine is separate from the classifier. It converts trend strength, price location, directional momentum, realized volatility, funding/premium context, and open-interest/squeeze risk into a causal state used by the risk budget. Derivatives inputs inform state and crowding risk; they do not originate the directional signal.
 
-## What the dashboard exposes
+## High-frequency research boundary
 
-- **Decision tape:** Drag and zoom across 5,806 four-hour candles while the signed target position stays synchronized below.
-- **Event layers:** Toggle long/short lifecycle bands, buy/sell adjustments, market-state changes, profit-guard actions and one-second fills independently.
-- **Performance path:** Compare the cost-adjusted strategy path with same-clock BTC 1× and inspect drawdown at the same timestamp.
-- **Controlled diagnostics:** Review same-window variants, state/side asymmetry and normalized long/short episode outcomes.
+The headline backtest is a **four-hour strategy**, not a live HFT claim. Its public execution component is a historical **one-second L1 study**:
 
-The controlled diagnostics use the same 5,438-bar window. Variant differences overlap and should be interpreted individually rather than added together.
+- 94.11% observed L1 quote coverage across executed adjustments
+- 63 event-selected execution overrides
+- 61 affected trades
+- +0.0188% mean selected price improvement
+
+The private research library also covers one-second returns and volatility, L1 spread, microprice, queue imbalance, signed trade flow, VWAP divergence, event-time order-flow imbalance, multi-level depth, book slope, update intensity, and staleness. These capabilities are disclosed as research coverage, not attributed as primary P&L or presented as live execution parity.
+
+## Validation evidence
+
+- The interactive tape exposes 5,806 four-hour candles, synchronized signed targets, lifecycle bands, risk actions, profit-protection events, and historical L1 price events.
+- Controlled diagnostics compare variants on a shared 5,438-bar window. Their effects overlap and must not be added together.
+- The latest append-only refresh preserved 5,550 earlier targets and appended 256 new four-hour bars without rewriting the historical path.
+- Equity, BTC 1.0×, and drawdown share one clock so each timestamp can be inspected directly.
+
+For methodology and evidence limits, read the [Technical Model Note](docs/TECHNICAL_MODEL_NOTE.md). A compact architecture map is available in [Mermaid source](docs/decision-layer-map.mmd).
 
 ## Run locally
 
@@ -58,12 +77,12 @@ No build step is required.
 python3 -m http.server 8000
 ```
 
-Then visit `http://127.0.0.1:8000/`.
+Then open `http://127.0.0.1:8000/`.
 
-The charting runtime is vendored from [TradingView Lightweight Charts](https://github.com/tradingview/lightweight-charts) under the Apache License 2.0; its license is retained in `assets/vendor/`.
+The charting runtime is vendored from [TradingView Lightweight Charts](https://github.com/tradingview/lightweight-charts) under the Apache License 2.0; the license is retained in `assets/vendor/`.
 
 ## Public scope
 
-This repository contains the interactive strategy replay and a sanitized historical evidence snapshot. The private implementation, experiment registry and live-trading infrastructure are not published. Historical simulation only; not investment advice or a promise of future returns.
+This repository contains a sanitized historical evidence snapshot and its interactive presentation layer. It does not publish the private implementation, fitted parameters, experiment registry, proprietary data contracts, or production trading infrastructure. Historical simulation only; not investment advice or a promise of future returns.
 
 — Qidong Yao

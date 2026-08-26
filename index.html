@@ -3,30 +3,31 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive BTC/USDT asymmetric trend strategy replay through 2026-08-25: draggable 4-hour decisions, cost-adjusted performance, lifecycle bands, execution events and a hard 1.0x leverage cap.">
+  <meta name="description" content="Systematic BTC research and execution stack: regime-aware directional alpha, walk-forward machine-learning risk controls, causal profit protection and a historical one-second L1 execution study.">
   <meta name="theme-color" content="#05090d">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="BTC Asymmetric Trend Strategy · Interactive Replay">
-  <meta property="og:description" content="Explore a cost-adjusted BTC strategy through draggable candles, synchronized positions, decision events and controlled diagnostics.">
-  <meta property="og:image" content="https://chandleryao720.github.io/btc-asymmetric-trend-research/assets/preview.png?v=20260826f">
+  <meta property="og:title" content="Systematic BTC Research & Execution Stack">
+  <meta property="og:description" content="Interactive 1.0x BTC strategy replay with draggable decisions, full risk metrics, model architecture and controlled validation evidence.">
+  <meta property="og:image" content="https://chandleryao720.github.io/btc-asymmetric-trend-research/assets/preview.png?v=20260826g">
   <meta name="twitter:card" content="summary_large_image">
-  <title>BTC Asymmetric Trend Strategy · Interactive Replay</title>
-  <link rel="stylesheet" href="assets/styles.css?v=20260826f">
+  <title>Systematic BTC Research &amp; Execution Stack</title>
+  <link rel="stylesheet" href="assets/styles.css?v=20260826g">
 </head>
 <body>
   <header class="command-bar">
-    <a class="command-brand" href="#top" aria-label="Back to top"><span>QY://</span>BTC_ASYM_TREND</a>
-    <div class="command-state" aria-label="Strategy replay state">
-      <span class="state-live"><i></i>HISTORICAL_REPLAY</span>
+    <a class="command-brand" href="#top" aria-label="Back to top"><span>QY://</span>SYSTEMATIC_BTC</a>
+    <div class="command-state" aria-label="Research replay state">
+      <span class="state-live"><i></i>PUBLIC_REPLAY</span>
       <span>BTCUSDT</span>
-      <span>4H</span>
-      <span>1.0X</span>
-      <span>C1_NET</span>
+      <span>4H DECISIONS</span>
+      <span>1S L1 STUDY</span>
+      <span>1.0X MAX</span>
     </div>
     <nav aria-label="Page navigation">
       <a href="#tape">TAPE</a>
+      <a href="#system">SYSTEM</a>
       <a href="#performance">PATH</a>
-      <a href="#diagnostics">DIAGNOSTICS</a>
+      <a href="#validation">VALIDATION</a>
     </nav>
   </header>
 
@@ -34,48 +35,76 @@
     <section class="masthead shell">
       <div class="masthead-code" data-run-range>RUN / 2024-01-01_04:00Z → 2026-08-25_16:00Z</div>
       <div class="masthead-grid">
-        <div>
-          <p class="prompt-line"><span>&gt;</span> LOAD STRATEGY.FINAL</p>
-          <h1>ASYMMETRIC_TREND<br><em>STRATEGY_REPLAY</em></h1>
+        <div class="hero-copy">
+          <p class="prompt-line"><span>&gt;</span> LOAD VERIFIED_RESEARCH_STACK</p>
+          <h1>SYSTEMATIC BTC<br><em>RESEARCH &amp; EXECUTION STACK</em></h1>
+          <p class="hero-summary">Regime-aware directional alpha, a walk-forward machine-learning risk veto, causal lifecycle controls and one-second microstructure research.</p>
+          <div class="hero-tags" aria-label="Research scope">
+            <span>BTCUSDT</span>
+            <span>4H DECISIONS</span>
+            <span>1S L1 EXECUTION STUDY</span>
+            <span>1.0X MAX EXPOSURE</span>
+            <span>REAL COSTS</span>
+          </div>
         </div>
-        <div class="build-note">
-          <span>MODE</span><strong>HISTORICAL REPLAY</strong>
-          <span>EXPOSURE</span><strong>−100.00% … +100.00%</strong>
-          <span>LEVERAGE</span><strong>1.0X // HARD CAP</strong>
-          <span>COST</span><strong>MAKER 0.02% / TAKER 0.05%</strong>
-          <span>REBATE</span><strong>0.00% / NONE</strong>
-        </div>
+        <aside class="build-note" aria-label="Public replay contract">
+          <span>SCOPE</span><strong>HISTORICAL SIMULATION</strong>
+          <span>EXPOSURE</span><strong>−100.00% … +100.00% · LEVERAGE 1.0X</strong>
+          <span>COST</span><strong>MAKER 0.02% · TAKER 0.05%</strong>
+          <span>REBATE</span><strong>0.00% · NONE</strong>
+          <span>DISCLOSURE</span><strong>ARCHITECTURE PUBLIC · RULES WITHHELD</strong>
+        </aside>
       </div>
+      <p class="evidence-boundary">Architecture and evidence are public. Proprietary factor definitions, thresholds, model parameters and execution rules are withheld.</p>
     </section>
 
-    <section class="metric-strip shell" aria-label="Performance summary">
-      <article><span>RET.NET.C1</span><strong class="positive" data-metric="netReturn">+358.09%</strong><small>PRIMARY</small></article>
-      <article><span>RET.GROSS.C0</span><strong data-metric="grossReturn">+489.41%</strong><small>GROSS DIAGNOSTIC</small></article>
-      <article><span>RET.BTC.1X</span><strong data-metric="benchmarkReturn">+87.58%</strong><small>SAME CLOCK</small></article>
-      <article><span>MAX.DRAWDOWN</span><strong class="negative" data-metric="maxDrawdown">−14.34%</strong><small>C1 NET PATH</small></article>
-      <article><span>SHARPE</span><strong data-metric="sharpe">2.35</strong><small>4H NET</small></article>
-      <article><span>CALMAR</span><strong data-metric="calmar">5.41</strong><small>CAGR / |MAX.DD|</small></article>
-      <article><span>INFO.RATIO</span><strong data-metric="informationRatio">0.49</strong><small>VS BTC 1X</small></article>
-      <article><span>EP.PAYOFF</span><strong data-metric="episodePayoff">1.87×</strong><small data-metric="episodePayoffMeta">284 CLOSED · W/L</small></article>
+    <section class="metric-strip metric-strip-primary shell" aria-label="Primary performance summary">
+      <article class="metric-primary"><span>NET CUM RETURN</span><strong class="positive" data-metric="netReturn">+358.09%</strong><small>REAL-COST PRIMARY</small></article>
+      <article><span>CAGR</span><strong class="positive" data-metric="annualizedReturn">+77.56%</strong><small>ANNUALIZED NET</small></article>
+      <article><span>BTC CAGR</span><strong data-metric="benchmarkAnnualizedReturn">+26.78%</strong><small>SAME-CLOCK 1.0X</small></article>
+      <article><span>ANNUALIZED EXCESS</span><strong class="positive" data-metric="annualizedExcessReturn">+50.78%</strong><small>STRATEGY MINUS BTC</small></article>
+      <article><span>MAX DRAWDOWN</span><strong class="negative" data-metric="maxDrawdown">−14.34%</strong><small>NET EQUITY PATH</small></article>
+      <article><span>SHARPE</span><strong data-metric="sharpe">2.35</strong><small>4H NET RETURNS</small></article>
+      <article><span>SORTINO</span><strong data-metric="sortino">3.20</strong><small>DOWNSIDE RISK</small></article>
+      <article><span>CALMAR</span><strong data-metric="calmar">5.41</strong><small>CAGR / |MAX DD|</small></article>
+    </section>
+
+    <section class="system-status shell" aria-label="Model layer status">
+      <article><span>ALPHA</span><strong>MULTI-HORIZON TREND</strong><small>DIRECTION ENGINE</small></article>
+      <article><span>REGIME</span><strong>FIVE-STATE · CAUSAL</strong><small>RISK BUDGET INPUT</small></article>
+      <article><span>ML POLICY</span><strong>WALK-FORWARD TREE</strong><small>SHORT → FLAT ONLY</small></article>
+      <article><span>LIFECYCLE</span><strong>CAUSAL MFE GUARD</strong><small>REDUCE / EXIT ONLY</small></article>
+      <article><span>MICROSTRUCTURE</span><strong>HISTORICAL 1S L1</strong><small>PRICE-ONLY STUDY</small></article>
+    </section>
+
+    <section class="metric-strip metric-strip-secondary shell" aria-label="Trading statistics">
+      <article><span>INFORMATION RATIO</span><strong data-metric="informationRatio">0.49</strong><small>VS BTC 1.0X</small></article>
+      <article><span>EPISODE PAYOFF</span><strong data-metric="episodePayoff">1.87×</strong><small>MEAN WIN / LOSS</small></article>
+      <article><span>PROFIT FACTOR</span><strong data-metric="profitFactor">1.84</strong><small>GROSS WIN / LOSS</small></article>
+      <article><span>WIN RATE</span><strong data-metric="winRate">49.65%</strong><small>CLOSED EPISODES</small></article>
+      <article><span>CLOSED EPISODES</span><strong data-metric="episodeCount">284</strong><small>96 LONG · 188 SHORT</small></article>
+      <article><span>AVG HOLDING</span><strong data-metric="avgHolding">2.38D</strong><small>PER CLOSED EPISODE</small></article>
+      <article><span>ADJUSTMENTS</span><strong data-metric="adjustments">1,035</strong><small>FULL REPLAY</small></article>
+      <article><span>EXPOSURE</span><strong>−100% … +100%</strong><small>LEVERAGE · 1.0X</small></article>
     </section>
 
     <section class="replay-strip shell" aria-label="Latest append-only replay">
       <header>
-        <span>LATEST POSITION</span>
+        <span>LATEST DECISION</span>
         <strong>APPEND-ONLY REPLAY</strong>
-        <small><b data-replay="latestPrice">$79,452</b> / <b data-replay="latestTime">2026-08-25 16:00Z</b></small>
+        <small><b data-replay="latestPrice">$79,452</b> · <b data-replay="latestTime">2026-08-25 16:00Z</b></small>
       </header>
-      <article><span>TARGET.NOW</span><strong class="negative" data-replay="latestTarget">−52.40% SHORT</strong><small>1.0X CAP</small></article>
-      <article><span>TROUGH→NOW</span><strong class="positive" data-replay="troughCapture">+8.87%</strong><small data-replay="troughBenchmark">BTC +23.65%</small></article>
-      <article><span>LAST.120H</span><strong class="positive" data-replay="last120h">+2.17%</strong><small data-replay="last120hBenchmark">BTC +9.70%</small></article>
-      <article><span>NEW.WINDOW</span><strong class="negative" data-replay="postCutoff">−1.90%</strong><small data-replay="postCutoffBenchmark">BTC +27.52%</small></article>
+      <article><span>TARGET NOW</span><strong class="negative" data-replay="latestTarget">−52.40% SHORT</strong><small>WITHIN 1.0X CAP</small></article>
+      <article><span>TROUGH → NOW</span><strong class="positive" data-replay="troughCapture">+8.87%</strong><small data-replay="troughBenchmark">BTC +23.65%</small></article>
+      <article><span>LAST 120H</span><strong class="positive" data-replay="last120h">+2.17%</strong><small data-replay="last120hBenchmark">BTC +9.70%</small></article>
+      <article><span>APPENDED WINDOW</span><strong class="negative" data-replay="postCutoff">−1.90%</strong><small data-replay="postCutoffBenchmark">BTC +27.52%</small></article>
     </section>
 
     <section class="console shell" id="tape">
       <header class="console-head">
         <div class="console-title">
           <span class="console-index">01</span>
-          <div><h2>DECISION_TAPE</h2><p>PRICE // LIFECYCLE // ORDERS // STATE // EXECUTION</p></div>
+          <div><h2>DECISION_TAPE</h2><p>DRAGGABLE 4H PRICE · SIGNED TARGET · CAUSAL EVENT OVERLAYS</p></div>
         </div>
         <div class="window-controls" role="group" aria-label="Visible history">
           <button type="button" data-window="30" class="active" aria-pressed="true">30D</button>
@@ -86,38 +115,39 @@
       </header>
 
       <div class="tape-readout" id="decisionReadout" aria-live="polite">
-        <span><i>T</i><b id="readoutTime">MOVE ACROSS TAPE</b></span>
-        <span><i>PX</i><b id="readoutClose">—</b></span>
-        <span><i>POS</i><b id="readoutPosition">—</b></span>
-        <span><i>STATE</i><b id="readoutState">—</b></span>
-        <span class="event-readout"><i>EVENT</i><b id="readoutEvents">—</b></span>
+        <span><i>TIME</i><b id="readoutTime">MOVE ACROSS TAPE</b></span>
+        <span><i>PRICE</i><b id="readoutClose">—</b></span>
+        <span><i>TARGET</i><b id="readoutPosition">—</b></span>
+        <span><i>SIDE</i><b id="readoutState">—</b></span>
+        <span class="event-readout"><i>VISIBLE EVENTS</i><b id="readoutEvents">—</b></span>
       </div>
 
       <div class="chart-console">
         <div class="event-toolbar">
           <div class="event-legend" aria-label="Event legend">
-            <span><i class="swatch swatch-long"></i>LONG SPAN</span>
-            <span><i class="swatch swatch-short"></i>SHORT SPAN</span>
+            <span><i class="swatch swatch-long"></i>LONG LIFECYCLE</span>
+            <span><i class="swatch swatch-short"></i>SHORT LIFECYCLE</span>
             <span><i class="event-dot trade-buy">B</i>BUY</span>
             <span><i class="event-dot trade-sell">S</i>SELL</span>
-            <span><i class="event-square"></i>STATE</span>
-            <span><i class="event-cyan"></i>1S FILL</span>
+            <span><i class="event-square"></i>RISK STATE</span>
+            <span><i class="event-cyan"></i>HISTORICAL L1 PRICE</span>
           </div>
           <div class="event-toggles" role="group" aria-label="Visible event layers">
             <button type="button" data-layer="lifecycles" class="active" aria-pressed="true">LIFECYCLE</button>
-            <button type="button" data-layer="trades" class="active" aria-pressed="true">B/S</button>
-            <button type="button" data-layer="state" class="active" aria-pressed="true">STATE</button>
-            <button type="button" data-layer="hft" class="active" aria-pressed="true">1S</button>
+            <button type="button" data-layer="trades" class="active" aria-pressed="true">ORDERS</button>
+            <button type="button" data-layer="state" class="active" aria-pressed="true">RISK</button>
+            <button type="button" data-layer="hft" class="active" aria-pressed="true">L1</button>
             <button type="button" data-layer="mfe" class="active" aria-pressed="true">MFE</button>
           </div>
         </div>
 
         <div class="price-stage">
+          <div class="chart-watermark" aria-hidden="true"><span>BTCUSDT · 4H</span><small>PUBLIC RESEARCH REPLAY</small></div>
           <div id="priceChart" class="price-chart" aria-label="Interactive BTC candlestick chart with strategy events"></div>
           <canvas id="lifecycleOverlay" aria-hidden="true"></canvas>
         </div>
 
-        <div class="position-head"><span>POS.TARGET</span><strong>−100% / 0% / +100%</strong></div>
+        <div class="position-head"><span>SIGNED TARGET EXPOSURE</span><strong>−100% · 0% · +100% · LEVERAGE 1.0X</strong></div>
         <div id="positionChart" class="position-chart" aria-label="Signed target position from negative one hundred to positive one hundred percent"></div>
 
         <div class="pan-control">
@@ -125,95 +155,219 @@
           <input id="tapePan" type="range" min="0" max="1000" step="1" value="1000" aria-label="Move the visible time window through history">
           <span>DRAG CHART OR SCRUB</span>
         </div>
+        <p class="chart-footnote">Machine-learning policy status is shown in the system layer below. Bar-level veto labels are intentionally omitted because they are not part of the sanitized public event snapshot.</p>
+      </div>
+    </section>
+
+    <section class="system-shell shell" id="system">
+      <header class="section-head">
+        <div class="console-title">
+          <span class="console-index">02</span>
+          <div><h2>SYSTEM_ARCHITECTURE</h2><p>SEVEN MODULES · NARROW RESPONSIBILITIES · EXPLICIT FAILURE BOUNDARIES</p></div>
+        </div>
+        <span class="section-status">CAUSAL INPUTS ONLY</span>
+      </header>
+
+      <div class="architecture-flow" aria-label="Systematic research and execution pipeline">
+        <article>
+          <header><i>01</i><span>ALPHA</span></header>
+          <h3>MULTI-HORIZON<br>TREND DIRECTION</h3>
+          <dl><div><dt>INPUT</dt><dd>CLOSED 4H OHLC</dd></div><div><dt>OUTPUT</dt><dd>LONG / FLAT / SHORT</dd></div></dl>
+          <p>Direction only. No leverage or execution decision.</p>
+        </article>
+        <article>
+          <header><i>02</i><span>STATE</span></header>
+          <h3>FIVE-STATE<br>MARKET REGIME</h3>
+          <dl><div><dt>INPUT</dt><dd>TREND · VOL · CROWDING</dd></div><div><dt>OUTPUT</dt><dd>CAUSAL STATE</dd></div></dl>
+          <p>Conditions the risk budget. Cannot create direction.</p>
+        </article>
+        <article>
+          <header><i>03</i><span>RISK</span></header>
+          <h3>VOLATILITY-SCALED<br>RISK BUDGET</h3>
+          <dl><div><dt>INPUT</dt><dd>SIDE · STATE · REALIZED VOL</dd></div><div><dt>OUTPUT</dt><dd>SIGNED TARGET</dd></div></dl>
+          <p>Hard-clipped to −100% through +100%.</p>
+        </article>
+        <article class="architecture-highlight">
+          <header><i>04</i><span>ML POLICY</span></header>
+          <h3>WALK-FORWARD<br>SHORT-RISK VETO</h3>
+          <dl><div><dt>INPUT</dt><dd>CAUSAL FEATURE FAMILIES</dd></div><div><dt>OUTPUT</dt><dd>SHORT → FLAT</dd></div></dl>
+          <p>Cannot open, flip or enlarge a position.</p>
+        </article>
+        <article>
+          <header><i>05</i><span>LIFECYCLE</span></header>
+          <h3>CAUSAL MFE<br>PROFIT PROTECTION</h3>
+          <dl><div><dt>INPUT</dt><dd>VISIBLE PROFIT PATH</dd></div><div><dt>OUTPUT</dt><dd>REDUCE / EXIT</dd></div></dl>
+          <p>No restore, reversal or expansion after an action.</p>
+        </article>
+        <article class="architecture-research">
+          <header><i>06</i><span>EXEC STUDY</span></header>
+          <h3>HISTORICAL 1S L1<br>MICROSTRUCTURE</h3>
+          <dl><div><dt>INPUT</dt><dd>OBSERVED BID / ASK</dd></div><div><dt>OUTPUT</dt><dd>SELECTED FILL PRICE</dd></div></dl>
+          <p>Price-only overlay; no side or size authority.</p>
+        </article>
+        <article>
+          <header><i>07</i><span>LEDGER</span></header>
+          <h3>REAL-COST<br>ACCOUNTING</h3>
+          <dl><div><dt>INPUT</dt><dd>FILLS · TURNOVER</dd></div><div><dt>OUTPUT</dt><dd>NET EQUITY</dd></div></dl>
+          <p>Maker 0.02%, taker 0.05%, rebates 0.00%.</p>
+        </article>
+      </div>
+
+      <div class="research-grid">
+        <article class="research-pane ml-pane">
+          <header><span>ML_POLICY / ACTIVE IN REPLAY</span><small>CONSTRAINED CLASSIFICATION</small></header>
+          <div class="policy-terminal">
+            <div><i>TASK</i><b>BAD-SHORT CLASSIFICATION</b></div>
+            <div><i>MODEL</i><b>INTERPRETABLE DECISION TREE</b></div>
+            <div><i>VALIDATION</i><b>EXPANDING-WINDOW TIME-FORWARD</b></div>
+            <div><i>FEATURES</i><b>TREND · PATH · VOL · DERIVATIVES · CONTEXT</b></div>
+            <div><i>ACTION SPACE</i><b>SHORT → FLAT ONLY</b></div>
+          </div>
+          <p>The classifier carries a deliberately narrow job: reject short exposure when the observed market context resembles historically adverse short setups. Future outcomes are training labels only; inference uses contemporaneously available inputs.</p>
+        </article>
+
+        <article class="research-pane regime-pane">
+          <header><span>MARKET_REGIME / ACTIVE IN REPLAY</span><small>FIVE CAUSAL STATES</small></header>
+          <div class="state-array" aria-label="Five-state market regime engine">
+            <span><i>S0</i><b>STATE VECTOR</b></span>
+            <span><i>S1</i><b>STATE VECTOR</b></span>
+            <span><i>S2</i><b>STATE VECTOR</b></span>
+            <span><i>S3</i><b>STATE VECTOR</b></span>
+            <span><i>S4</i><b>STATE VECTOR</b></span>
+          </div>
+          <div class="feature-chips">
+            <span>TREND STRENGTH</span><span>CHANNEL LOCATION</span><span>DIRECTIONAL MOMENTUM</span><span>REALIZED VOLATILITY</span><span>FUNDING / PREMIUM</span><span>OI / SQUEEZE RISK</span>
+          </div>
+          <p>The state engine controls risk allocation and short-side suppression. Derivatives context informs regime and crowding risk; it does not originate a trade direction.</p>
+        </article>
+
+        <article class="research-pane micro-pane">
+          <header><span>MICROSTRUCTURE / EVIDENCE SPLIT</span><small>OVERLAY VS RESEARCH LIBRARY</small></header>
+          <div class="micro-split">
+            <section>
+              <span class="status-chip active">HISTORICAL OVERLAY</span>
+              <h3>SELECTED 1S L1 EXECUTION</h3>
+              <dl>
+                <div><dt>QUOTE COVERAGE</dt><dd data-execution="coverage">94.11%</dd></div>
+                <div><dt>SELECTED EVENTS</dt><dd data-execution="overrides">63</dd></div>
+                <div><dt>AFFECTED TRADES</dt><dd data-execution="affectedTrades">61</dd></div>
+                <div><dt>MEAN SELECTED PRICE IMPROVEMENT</dt><dd data-module="hftImprove">+0.0188%</dd></div>
+              </dl>
+            </section>
+            <section>
+              <span class="status-chip research">RESEARCH COVERAGE</span>
+              <h3>HIGH-FREQUENCY FACTOR LIBRARY</h3>
+              <div class="feature-chips compact">
+                <span>1S RETURN / VOL</span><span>L1 SPREAD</span><span>MICROPRICE</span><span>QUEUE IMBALANCE</span><span>SIGNED TRADE FLOW</span><span>VWAP DIVERGENCE</span><span>EVENT-TIME OFI</span><span>MULTI-LEVEL DEPTH</span><span>BOOK SLOPE</span><span>STALENESS</span>
+              </div>
+            </section>
+          </div>
+          <p class="boundary-note">The public result is not presented as a live HFT strategy. The one-second component is a historical, event-selected execution study; the broader factor library demonstrates research capability and is not attributed as primary P&amp;L.</p>
+        </article>
       </div>
     </section>
 
     <section class="console shell" id="performance">
       <header class="console-head">
         <div class="console-title">
-          <span class="console-index">02</span>
-          <div><h2>PERFORMANCE_PATH</h2><p>CUMULATIVE RETURN / COST-ADJUSTED PRIMARY / 1.0X</p></div>
+          <span class="console-index">03</span>
+          <div><h2>PERFORMANCE_PATH</h2><p>COST-ADJUSTED STRATEGY · BTC 1.0X BENCHMARK · SYNCHRONIZED DRAWDOWN</p></div>
         </div>
         <output id="equityReadout">MOVE ACROSS PATH</output>
       </header>
       <div class="chart-console path-console">
         <div class="path-legend">
-          <span><i class="line-key strategy-key"></i>STRATEGY.C1</span>
-          <span><i class="line-key benchmark-key"></i>BTC.1X</span>
+          <span><i class="line-key strategy-key"></i>STRATEGY · NET</span>
+          <span><i class="line-key benchmark-key"></i>BTC · 1.0X</span>
           <span><i class="line-key drawdown-key"></i>DRAWDOWN</span>
         </div>
         <div id="equityChart" class="equity-chart" aria-label="Strategy and BTC cumulative return comparison"></div>
-        <div class="position-head"><span>DRAWDOWN</span><strong data-metric="maxDrawdown">−14.34%</strong></div>
+        <div class="position-head"><span>NET EQUITY DRAWDOWN</span><strong data-metric="maxDrawdown">−14.34%</strong></div>
         <div id="drawdownChart" class="drawdown-chart" aria-label="Strategy drawdown series"></div>
       </div>
     </section>
 
-    <section class="diagnostics shell" id="diagnostics">
+    <section class="diagnostics shell" id="validation">
       <header class="diagnostics-head">
         <div class="console-title">
-          <span class="console-index">03</span>
-          <div><h2>STRATEGY_DIAGNOSTICS</h2><p>CONTROLLED REPLAYS / SAME CLOCK / C1 COSTS</p></div>
+          <span class="console-index">04</span>
+          <div><h2>VALIDATION_EVIDENCE</h2><p>CONTROLLED REPLAYS · SAME CLOCK · REAL-COST PRIMARY</p></div>
         </div>
         <span>5,438 COMMON-WINDOW BARS</span>
       </header>
 
+      <div class="validation-banner">
+        <span>GROSS DIAGNOSTIC <b data-metric="grossReturn">+489.41%</b></span>
+        <span>APPEND-ONLY REFRESH</span>
+        <strong>5,550 PRIOR TARGETS UNCHANGED</strong>
+        <strong>256 NEW 4H BARS APPENDED</strong>
+        <small>NO HISTORICAL REWRITE</small>
+      </div>
+
       <div class="diagnostic-grid">
         <article class="diagnostic-pane ablation-pane">
-          <header><span>ABLATION.RETURN</span><small>CUMULATIVE %</small></header>
+          <header><span>SAME-WINDOW ABLATION RETURN</span><small>CUMULATIVE % · NON-ADDITIVE</small></header>
           <div id="ablationChart" class="ablation-chart" aria-label="Ablation cumulative-return comparison"></div>
+          <p class="pane-note">Each variant is compared on one common window. Differences overlap and must not be summed.</p>
         </article>
 
         <article class="diagnostic-pane replay-pane">
-          <header><span>OVERLAY.REPLAY</span><small>CUMULATIVE %</small></header>
+          <header><span>OVERLAY REPLAY</span><small>CUMULATIVE % · COMMON WINDOW</small></header>
           <dl>
             <div><dt>PARENT</dt><dd data-module="parentReturn">+349.14%</dd></div>
-            <div><dt>+ MFE GUARD</dt><dd data-module="mfeOnly">+365.79%</dd></div>
-            <div><dt>+ 1S EXEC</dt><dd data-module="hftOnly">+352.12%</dd></div>
+            <div><dt>+ CAUSAL MFE GUARD</dt><dd data-module="mfeOnly">+365.79%</dd></div>
+            <div><dt>+ HISTORICAL 1S EXEC STUDY</dt><dd data-module="hftOnly">+352.12%</dd></div>
             <div class="best"><dt>COMBINED</dt><dd data-module="comboReturn">+368.88%</dd></div>
           </dl>
           <div class="execution-trace">
-            <span>SELECTED.FILLS</span><strong data-execution="overrides">63</strong>
-            <span>MEAN.PX.IMPROVEMENT</span><strong data-module="hftImprove">+0.0188%</strong>
+            <span>SELECTED L1 EVENTS</span><strong data-execution="overrides">63</strong>
+            <span>MEAN SELECTED PRICE IMPROVEMENT</span><strong data-module="hftImprove">+0.0188%</strong>
           </div>
         </article>
 
         <article class="diagnostic-pane matrix-pane">
-          <header><span>STATE × SIDE</span><small>DESCRIPTIVE / CUMULATIVE %</small></header>
-          <div class="matrix" aria-label="State and side asymmetry comparison">
-            <span></span><b>SYM</b><b>ASYM</b>
-            <b>STATE.OFF</b><i data-ablation="state0Asym0">+156.90%</i><i data-ablation="state0Asym1">+222.41%</i>
-            <b>STATE.ON</b><i data-ablation="state1Asym0">+254.82%</i><i class="matrix-best" data-ablation="state1Asym1">+349.14%</i>
+          <header><span>REGIME × SIDE STRUCTURE</span><small>DESCRIPTIVE · CUMULATIVE %</small></header>
+          <div class="matrix" aria-label="Market-state and side-asymmetry comparison">
+            <span></span><b>SYMMETRIC</b><b>ASYMMETRIC</b>
+            <b>REGIME OFF</b><i data-ablation="state0Asym0">+156.90%</i><i data-ablation="state0Asym1">+222.41%</i>
+            <b>REGIME ON</b><i data-ablation="state1Asym0">+254.82%</i><i class="matrix-best" data-ablation="state1Asym1">+349.14%</i>
           </div>
+          <p class="pane-note">The matrix isolates the value of market-state conditioning and asymmetric long/short treatment on a shared sample.</p>
         </article>
 
         <article class="diagnostic-pane distribution-pane">
-          <header><span>EPISODE.DISTRIBUTION</span><small>NORMALIZED %</small></header>
+          <header><span>EPISODE RETURN DISTRIBUTION</span><small>NORMALIZED % · 1.0X</small></header>
           <canvas id="episodeDistribution" aria-label="Normalized long and short episode return distributions"></canvas>
-          <div class="distribution-foot"><span><i class="swatch swatch-long"></i>LONG</span><span><i class="swatch swatch-short"></i>SHORT</span><span>MEDIAN <b data-metric="longMedian">−0.51%</b> / <b data-metric="shortMedian">+0.07%</b></span></div>
+          <div class="distribution-foot"><span><i class="swatch swatch-long"></i>LONG</span><span><i class="swatch swatch-short"></i>SHORT</span><span>MEDIAN <b data-metric="longMedian">−0.41%</b> / <b data-metric="shortMedian">+0.04%</b></span></div>
         </article>
       </div>
     </section>
 
-    <section class="stack shell" id="stack" aria-label="Decision stack">
-      <header><span>DECISION_STACK</span><small>BOUNDED RESPONSIBILITIES</small></header>
-      <div>
-        <span><i>01</i><b>DIRECTION</b><em>DONCHIAN 20/55/100</em></span>
-        <span><i>02</i><b>RISK BUDGET</b><em>STATE-CONSTRAINED SIZE</em></span>
-        <span><i>03</i><b>ML FILTER</b><em>BAD-SHORT VETO ONLY</em></span>
-        <span><i>04</i><b>PROFIT GUARD</b><em>TIME-CAUSAL MFE</em></span>
-        <span><i>05</i><b>EXECUTION</b><em>1S L1 PRICE CHECK</em></span>
+    <section class="evidence-shell shell" id="evidence">
+      <header class="section-head">
+        <div class="console-title">
+          <span class="console-index">05</span>
+          <div><h2>EVIDENCE_BOUNDARY</h2><p>WHAT THE PUBLIC ARTIFACT DOES AND DOES NOT CLAIM</p></div>
+        </div>
+      </header>
+      <div class="evidence-grid">
+        <article><span class="status-chip active">VERIFIED</span><h3>PRIMARY RESULT</h3><p>1.0× historical BTC/USDT simulation, same-clock benchmark, explicit fees, zero rebates and synchronized drawdown.</p></article>
+        <article><span class="status-chip active">VERIFIED</span><h3>MODEL DESIGN</h3><p>Regime-aware risk sizing, constrained walk-forward short veto and causal MFE lifecycle protection.</p></article>
+        <article><span class="status-chip research">HISTORICAL STUDY</span><h3>MICROSTRUCTURE</h3><p>Observed one-second L1 quotes replace selected historical fill prices without changing side or target exposure.</p></article>
+        <article><span class="status-chip withheld">WITHHELD</span><h3>PROPRIETARY DETAIL</h3><p>Exact factors, thresholds, fitted tree rules, data joins and production execution logic are intentionally private.</p></article>
       </div>
     </section>
   </main>
 
   <footer class="footer shell" id="scope">
-    <span data-evidence-updated>UPDATED 2026-08-25 16:00Z / COST-ADJUSTED HISTORICAL REPLAY</span>
-    <span>1.0X / 100% EXPOSURE CAP / ZERO REBATES</span>
-    <span>QIDONG YAO · QUANTITATIVE RESEARCH &amp; STRATEGY</span>
+    <span data-evidence-updated>UPDATED 2026-08-25 16:00Z · COST-ADJUSTED HISTORICAL REPLAY</span>
+    <span>1.0X · ±100% EXPOSURE CAP · ZERO REBATES</span>
+    <span>QIDONG YAO · QUANTITATIVE RESEARCH</span>
   </footer>
 
   <script src="assets/vendor/lightweight-charts.standalone.production.js"></script>
-  <script src="data/showcase-data.js?v=20260826f"></script>
-  <script src="assets/app.js?v=20260826f"></script>
+  <script src="data/showcase-data.js?v=20260826g"></script>
+  <script src="data/verified-metrics.js?v=20260826g"></script>
+  <script src="assets/app.js?v=20260826g"></script>
 </body>
 </html>
