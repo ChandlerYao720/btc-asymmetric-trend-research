@@ -4,7 +4,7 @@ An interactive, evidence-grounded research console for a BTC/USDT trend system w
 
 [Open the interactive research page](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
 
-![Interactive BTC strategy research preview](assets/preview.png?v=20260826b)
+![Interactive BTC strategy research preview](assets/preview.png?v=20260826c)
 
 ## Research thesis
 

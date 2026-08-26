@@ -61,7 +61,7 @@
     calmar: Number(data.metrics.calmar).toFixed(2),
     informationRatio: Number(data.metrics.informationRatio4hVsBtc1x).toFixed(2),
     episodePayoff: `${Number(data.metrics.episodePayoffRatio1x).toFixed(2)}×`,
-    episodePayoffMeta: `${data.metrics.episodes} CLOSED · AVG W/L`,
+    episodePayoffMeta: `${data.metrics.episodes} CLOSED · W/L`,
     longMedian: signedPercent(data.metrics.longMedianPct),
     shortMedian: signedPercent(data.metrics.shortMedianPct),
   };
