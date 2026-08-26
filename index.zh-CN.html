@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="系统化 BTC 研究与执行框架：市场状态约束的方向信号、滚动前推机器学习风险控制、因果利润保护与历史一秒级一档行情执行研究。">
+  <meta name="theme-color" content="#05090d">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="系统化 BTC 研究与执行框架">
+  <meta property="og:description" content="可拖动的一倍 BTC 策略回放，展示风险指标、模型结构、时序决策与受控验证证据。">
+  <meta property="og:image" content="https://chandleryao720.github.io/btc-asymmetric-trend-research/assets/preview.png?v=20260826h">
+  <meta name="twitter:card" content="summary_large_image">
+  <title>系统化 BTC 研究与执行框架</title>
+  <link rel="canonical" href="https://chandleryao720.github.io/btc-asymmetric-trend-research/index.zh-CN.html">
+  <link rel="alternate" hreflang="x-default" href="https://chandleryao720.github.io/btc-asymmetric-trend-research/">
+  <link rel="alternate" hreflang="en" href="https://chandleryao720.github.io/btc-asymmetric-trend-research/">
+  <link rel="alternate" hreflang="zh-CN" href="https://chandleryao720.github.io/btc-asymmetric-trend-research/index.zh-CN.html">
+  <link rel="stylesheet" href="assets/styles.css?v=20260826h">
+</head>
+<body>
+  <header class="command-bar">
+    <a class="command-brand" href="#top" aria-label="返回顶部"><span>QY://</span>SYSTEMATIC_BTC</a>
+    <div class="command-state" aria-label="研究回放状态">
+      <span class="state-live"><i></i>公开回放</span>
+      <span>BTCUSDT</span>
+      <span>四小时决策</span>
+      <span>一秒执行研究</span>
+      <span>1.0倍上限</span>
+    </div>
+    <div class="command-actions">
+      <nav aria-label="页面导航">
+        <a href="#tape">时序</a>
+        <a href="#system">系统</a>
+        <a href="#performance">净值</a>
+        <a href="#validation">验证</a>
+      </nav>
+      <div class="language-switch" aria-label="选择语言">
+        <a href="index.html" lang="en" hreflang="en">EN</a><span>/</span><strong aria-current="page">中文</strong>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="masthead shell">
+      <div class="masthead-code" data-run-range>区间 / 2024-01-01_04:00Z → 2026-08-25_16:00Z</div>
+      <div class="masthead-grid">
+        <div class="hero-copy">
+          <p class="prompt-line"><span>&gt;</span> 加载已核验研究框架</p>
+          <h1>系统化 BTC<br><em>研究与执行框架</em></h1>
+          <p class="hero-summary">市场状态约束的方向信号、滚动前推机器学习风险否决、因果利润保护，以及历史一秒级 L1（Level 1，一档行情；用于还原事件时点可见的最优买卖价）执行研究。</p>
+          <div class="hero-tags" aria-label="研究范围">
+            <span>BTCUSDT</span>
+            <span>四小时决策</span>
+            <span>一秒一档行情执行研究</span>
+            <span>最大敞口 1.0 倍</span>
+            <span>真实手续费</span>
+          </div>
+        </div>
+        <aside class="build-note" aria-label="公开回放口径">
+          <span>范围</span><strong>历史模拟</strong>
+          <span>敞口</span><strong>−100.00% … +100.00% · 杠杆 1.0 倍</strong>
+          <span>成本</span><strong>挂单 0.02% · 吃单 0.05%</strong>
+          <span>返佣</span><strong>0.00% · 无</strong>
+          <span>公开范围</span><strong>架构与证据公开 · 规则保密</strong>
+        </aside>
+      </div>
+      <p class="evidence-boundary">公开内容覆盖系统架构与研究证据；具体因子定义、阈值、模型参数和执行规则保留在私有研究环境中。</p>
+    </section>
+
+    <section class="metric-strip metric-strip-primary shell" aria-label="主要绩效概览">
+      <article class="metric-primary"><span>含成本累计收益</span><strong class="positive" data-metric="netReturn">+358.09%</strong><small>主要结果 · 真实手续费</small></article>
+      <article><span>策略复合年化</span><strong class="positive" data-metric="annualizedReturn">+77.56%</strong><small>含成本年化</small></article>
+      <article><span>BTC 复合年化</span><strong data-metric="benchmarkAnnualizedReturn">+26.78%</strong><small>同区间 · 一倍持有</small></article>
+      <article><span>年化超额收益</span><strong class="positive" data-metric="annualizedExcessReturn">+50.78%</strong><small>策略复合年化减 BTC 复合年化</small></article>
+      <article><span>最大回撤</span><strong class="negative" data-metric="maxDrawdown">−14.34%</strong><small>含成本净值路径</small></article>
+      <article><span>夏普比率</span><strong data-metric="sharpe">2.35</strong><small>四小时含成本收益</small></article>
+      <article><span>索提诺比率</span><strong data-metric="sortino">3.20</strong><small>下行风险</small></article>
+      <article><span>卡玛比率</span><strong data-metric="calmar">5.41</strong><small>复合年化 / |最大回撤|</small></article>
+    </section>
+
+    <section class="system-status shell" aria-label="模型层状态">
+      <article><span>方向信号</span><strong>多周期趋势</strong><small>只决定方向</small></article>
+      <article><span>市场状态</span><strong>五状态 · 因果</strong><small>风险预算输入</small></article>
+      <article><span>机器学习策略</span><strong>滚动前推决策树</strong><small>仅做空 → 空仓</small></article>
+      <article><span>利润保护</span><strong>因果浮盈回吐保护</strong><small>只允许减仓 / 退出</small></article>
+      <article><span>微观结构</span><strong>历史一秒一档行情</strong><small>只研究成交价</small></article>
+    </section>
+
+    <section class="metric-strip metric-strip-secondary shell" aria-label="交易统计">
+      <article><span>信息比率</span><strong data-metric="informationRatio">0.49</strong><small>相对 BTC 一倍持有</small></article>
+      <article><span>交易周期盈亏比</span><strong data-metric="episodePayoff">1.87×</strong><small>平均盈利 / 平均亏损</small></article>
+      <article><span>盈利因子</span><strong data-metric="profitFactor">1.84</strong><small>总盈利 / 总亏损</small></article>
+      <article><span>交易周期胜率</span><strong data-metric="winRate">49.65%</strong><small>已结束周期</small></article>
+      <article><span>已结束周期</span><strong data-metric="episodeCount">284</strong><small>96 多头 · 188 空头</small></article>
+      <article><span>平均持仓</span><strong data-metric="avgHolding">2.38天</strong><small>每个已结束周期</small></article>
+      <article><span>调仓次数</span><strong data-metric="adjustments">1,035</strong><small>完整回放</small></article>
+      <article><span>风险敞口</span><strong>−100% … +100%</strong><small>杠杆 · 1.0 倍</small></article>
+    </section>
+
+    <section class="replay-strip shell" aria-label="最新追加式回放">
+      <header>
+        <span>最新决策</span>
+        <strong>追加式回放</strong>
+        <small><b data-replay="latestPrice">$79,452</b> · <b data-replay="latestTime">2026-08-25 16:00Z</b></small>
+      </header>
+      <article><span>当前目标</span><strong class="negative" data-replay="latestTarget">−52.40% 做空</strong><small>位于 1.0 倍上限内</small></article>
+      <article><span>近期低点 → 当前</span><strong class="positive" data-replay="troughCapture">+8.87%</strong><small data-replay="troughBenchmark">BTC +23.65%</small></article>
+      <article><span>最近 120 小时</span><strong class="positive" data-replay="last120h">+2.17%</strong><small data-replay="last120hBenchmark">BTC +9.70%</small></article>
+      <article><span>新增区间</span><strong class="negative" data-replay="postCutoff">−1.90%</strong><small data-replay="postCutoffBenchmark">BTC +27.52%</small></article>
+    </section>
+
+    <section class="console shell" id="tape">
+      <header class="console-head">
+        <div class="console-title">
+          <span class="console-index">01</span>
+          <div><h2>决策时序</h2><p>可拖动四小时价格 · 有符号目标仓位 · 因果事件叠加</p></div>
+        </div>
+        <div class="window-controls" role="group" aria-label="可见历史区间">
+          <button type="button" data-window="30" class="active" aria-pressed="true">30天</button>
+          <button type="button" data-window="90" aria-pressed="false">90天</button>
+          <button type="button" data-window="365" aria-pressed="false">1年</button>
+          <button type="button" data-window="all" aria-pressed="false">全部</button>
+        </div>
+      </header>
+
+      <div class="tape-readout" id="decisionReadout" aria-live="polite">
+        <span><i>时间</i><b id="readoutTime">在图中移动查看</b></span>
+        <span><i>价格</i><b id="readoutClose">—</b></span>
+        <span><i>目标仓位</i><b id="readoutPosition">—</b></span>
+        <span><i>方向</i><b id="readoutState">—</b></span>
+        <span class="event-readout"><i>可见事件</i><b id="readoutEvents">—</b></span>
+      </div>
+
+      <div class="chart-console">
+        <div class="event-toolbar">
+          <div class="event-legend" aria-label="事件图例">
+            <span><i class="swatch swatch-long"></i>多头持仓周期</span>
+            <span><i class="swatch swatch-short"></i>空头持仓周期</span>
+            <span><i class="event-dot trade-buy">B</i>买入</span>
+            <span><i class="event-dot trade-sell">S</i>卖出</span>
+            <span><i class="event-square"></i>风险状态</span>
+            <span><i class="event-cyan"></i>历史 L1 成交价</span>
+          </div>
+          <div class="event-toggles" role="group" aria-label="可见事件层">
+            <button type="button" data-layer="lifecycles" class="active" aria-pressed="true">持仓周期</button>
+            <button type="button" data-layer="trades" class="active" aria-pressed="true">委托</button>
+            <button type="button" data-layer="state" class="active" aria-pressed="true">风险</button>
+            <button type="button" data-layer="hft" class="active" aria-pressed="true">L1</button>
+            <button type="button" data-layer="mfe" class="active" aria-pressed="true">利润保护</button>
+          </div>
+        </div>
+
+        <div class="price-stage">
+          <div class="chart-watermark" aria-hidden="true"><span>BTCUSDT · 4H</span><small>公开研究回放</small></div>
+          <div id="priceChart" class="price-chart" aria-label="带策略事件的交互式 BTC K 线图"></div>
+          <canvas id="lifecycleOverlay" aria-hidden="true"></canvas>
+        </div>
+
+        <div class="position-head"><span>有符号目标仓位</span><strong>−100% · 0% · +100% · 杠杆 1.0 倍</strong></div>
+        <div id="positionChart" class="position-chart" aria-label="负百分之一百至正百分之一百的目标仓位"></div>
+
+        <div class="pan-control">
+          <span id="windowLabel">区间 / 最近 30 天</span>
+          <input id="tapePan" type="range" min="0" max="1000" step="1" value="1000" aria-label="沿历史时间轴移动可见窗口">
+          <span>拖动图表或滑杆</span>
+        </div>
+        <p class="chart-footnote">机器学习策略状态在下方系统层说明。公开事件快照经过脱敏，因此主图不显示逐根 K 线的否决标签。</p>
+      </div>
+    </section>
+
+    <section class="system-shell shell" id="system">
+      <header class="section-head">
+        <div class="console-title">
+          <span class="console-index">02</span>
+          <div><h2>系统结构</h2><p>七个模块 · 职责边界明确 · 失败边界可解释</p></div>
+        </div>
+        <span class="section-status">仅使用因果输入</span>
+      </header>
+
+      <div class="architecture-flow" aria-label="系统化研究与执行流程">
+        <article>
+          <header><i>01</i><span>方向</span></header>
+          <h3>多周期<br>趋势方向</h3>
+          <dl><div><dt>输入</dt><dd>已收盘四小时开高低收</dd></div><div><dt>输出</dt><dd>做多 / 空仓 / 做空</dd></div></dl>
+          <p>只决定方向，不决定杠杆或成交方式。</p>
+        </article>
+        <article>
+          <header><i>02</i><span>状态</span></header>
+          <h3>五状态<br>市场环境</h3>
+          <dl><div><dt>输入</dt><dd>趋势 · 波动 · 拥挤</dd></div><div><dt>输出</dt><dd>因果市场状态</dd></div></dl>
+          <p>约束风险预算，不能产生交易方向。</p>
+        </article>
+        <article>
+          <header><i>03</i><span>风险</span></header>
+          <h3>波动率缩放<br>风险预算</h3>
+          <dl><div><dt>输入</dt><dd>方向 · 状态 · 已实现波动率</dd></div><div><dt>输出</dt><dd>有符号目标仓位</dd></div></dl>
+          <p>仓位硬限制在 −100% 至 +100%。</p>
+        </article>
+        <article class="architecture-highlight">
+          <header><i>04</i><span>机器学习策略</span></header>
+          <h3>滚动前推<br>空头风险否决</h3>
+          <dl><div><dt>输入</dt><dd>因果特征族</dd></div><div><dt>输出</dt><dd>做空 → 空仓</dd></div></dl>
+          <p>不能开仓、反向或扩大仓位。</p>
+        </article>
+        <article>
+          <header><i>05</i><span>持仓周期</span></header>
+          <h3>最大有利波动<br>利润保护</h3>
+          <dl><div><dt>输入</dt><dd>当时可见的浮盈路径</dd></div><div><dt>输出</dt><dd>减仓 / 退出</dd></div></dl>
+          <p>最大有利波动用于监控浮盈回吐；动作后不能恢复、反向或加仓。</p>
+        </article>
+        <article class="architecture-research">
+          <header><i>06</i><span>执行研究</span></header>
+          <h3>历史一秒一档行情<br>市场微观结构</h3>
+          <dl><div><dt>输入</dt><dd>实测最优买价 / 卖价</dd></div><div><dt>输出</dt><dd>入选事件成交价</dd></div></dl>
+          <p>只改变成交价格，不拥有方向或仓位权限。</p>
+        </article>
+        <article>
+          <header><i>07</i><span>账本</span></header>
+          <h3>真实成本<br>顺序记账</h3>
+          <dl><div><dt>输入</dt><dd>成交 · 换手</dd></div><div><dt>输出</dt><dd>含成本净值</dd></div></dl>
+          <p>挂单 0.02%，吃单 0.05%，返佣 0.00%。</p>
+        </article>
+      </div>
+
+      <div class="research-grid">
+        <article class="research-pane ml-pane">
+          <header><span>机器学习策略 / 已进入回放</span><small>受约束分类</small></header>
+          <div class="policy-terminal">
+            <div><i>任务</i><b>不利空头环境分类</b></div>
+            <div><i>模型</i><b>可解释决策树</b></div>
+            <div><i>验证</i><b>扩展窗口时间前推</b></div>
+            <div><i>特征</i><b>趋势 · 路径 · 波动 · 衍生品 · 上下文</b></div>
+            <div><i>动作空间</i><b>仅做空 → 空仓</b></div>
+          </div>
+          <p>分类器只识别与历史不利空头形态相似的市场环境，并否决已有空头敞口。未来结果只用于训练标签；实际决策仅接收当时可见的信息。</p>
+        </article>
+
+        <article class="research-pane regime-pane">
+          <header><span>市场状态 / 已进入回放</span><small>五种因果状态</small></header>
+          <div class="state-array" aria-label="五状态市场环境引擎">
+            <span><i>S0</i><b>状态向量</b></span>
+            <span><i>S1</i><b>状态向量</b></span>
+            <span><i>S2</i><b>状态向量</b></span>
+            <span><i>S3</i><b>状态向量</b></span>
+            <span><i>S4</i><b>状态向量</b></span>
+          </div>
+          <div class="feature-chips">
+            <span>趋势强度</span><span>通道位置</span><span>方向动量</span><span>已实现波动率</span><span>资金费率 / 溢价</span><span>持仓量 / 挤压风险</span>
+          </div>
+          <p>状态引擎控制风险分配和空头抑制。衍生品环境用于描述市场状态与拥挤风险，不负责产生交易方向。</p>
+        </article>
+
+        <article class="research-pane micro-pane">
+          <header><span>市场微观结构 / 证据分层</span><small>执行覆盖与研究库分开</small></header>
+          <div class="micro-split">
+            <section>
+              <span class="status-chip active">历史成交价叠加</span>
+              <h3>入选事件的一秒一档行情执行</h3>
+              <dl>
+                <div><dt>行情覆盖率</dt><dd data-execution="coverage">94.11%</dd></div>
+                <div><dt>入选事件</dt><dd data-execution="overrides">63</dd></div>
+                <div><dt>受影响交易</dt><dd data-execution="affectedTrades">61</dd></div>
+                <div><dt>平均入选成交价改善</dt><dd data-module="hftImprove">+0.0188%</dd></div>
+              </dl>
+            </section>
+            <section>
+              <span class="status-chip research">研究覆盖</span>
+              <h3>高频因子研究库</h3>
+              <div class="feature-chips compact">
+                <span>一秒收益 / 波动</span><span>一档买卖价差</span><span>微价格</span><span>队列不平衡</span><span>有符号成交流</span><span>成交量加权均价偏离</span><span>事件时间订单流不平衡</span><span>多档盘口深度</span><span>订单簿斜率</span><span>盘口陈旧度</span>
+              </div>
+            </section>
+          </div>
+          <p class="boundary-note">公开结果不构成 HFT（High-Frequency Trading，高频交易；此处用于界定秒级研究能力，不代表实时交易系统）实盘主张。一秒模块属于历史事件筛选执行研究；更广泛的因子库用于展示研究覆盖，不归因为主要策略收益。</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="console shell" id="performance">
+      <header class="console-head">
+        <div class="console-title">
+          <span class="console-index">03</span>
+          <div><h2>绩效路径</h2><p>含成本策略 · BTC 一倍基准 · 同步回撤</p></div>
+        </div>
+        <output id="equityReadout">在净值图中移动查看</output>
+      </header>
+      <div class="chart-console path-console">
+        <div class="path-legend">
+          <span><i class="line-key strategy-key"></i>策略 · 含成本</span>
+          <span><i class="line-key benchmark-key"></i>BTC · 一倍持有</span>
+          <span><i class="line-key drawdown-key"></i>回撤</span>
+        </div>
+        <div id="equityChart" class="equity-chart" aria-label="策略与 BTC 累计收益对比"></div>
+        <div class="position-head"><span>含成本净值回撤</span><strong data-metric="maxDrawdown">−14.34%</strong></div>
+        <div id="drawdownChart" class="drawdown-chart" aria-label="策略回撤序列"></div>
+      </div>
+    </section>
+
+    <section class="diagnostics shell" id="validation">
+      <header class="diagnostics-head">
+        <div class="console-title">
+          <span class="console-index">04</span>
+          <div><h2>验证证据</h2><p>受控回放 · 同一时间轴 · 含成本结果优先</p></div>
+        </div>
+        <span>5,438 根共同窗口 K 线</span>
+      </header>
+
+      <div class="validation-banner">
+        <span>毛收益诊断 <b data-metric="grossReturn">+489.41%</b></span>
+        <span>追加式刷新</span>
+        <strong>此前 5,550 个目标仓位不变</strong>
+        <strong>新增 256 根四小时 K 线</strong>
+        <small>没有重写历史路径</small>
+      </div>
+
+      <div class="diagnostic-grid">
+        <article class="diagnostic-pane ablation-pane">
+          <header><span>同窗口消融收益</span><small>累计收益 % · 不可相加</small></header>
+          <div id="ablationChart" class="ablation-chart" aria-label="消融实验累计收益对比"></div>
+          <p class="pane-note">所有变体使用同一共同窗口。各模块差异相互重叠，不能直接相加。</p>
+        </article>
+
+        <article class="diagnostic-pane replay-pane">
+          <header><span>叠加模块回放</span><small>累计收益 % · 共同窗口</small></header>
+          <dl>
+            <div><dt>父策略</dt><dd data-module="parentReturn">+349.14%</dd></div>
+            <div><dt>+ 因果利润保护</dt><dd data-module="mfeOnly">+365.79%</dd></div>
+            <div><dt>+ 历史一秒执行研究</dt><dd data-module="hftOnly">+352.12%</dd></div>
+            <div class="best"><dt>联合叠加</dt><dd data-module="comboReturn">+368.88%</dd></div>
+          </dl>
+          <div class="execution-trace">
+            <span>入选一档行情事件</span><strong data-execution="overrides">63</strong>
+            <span>平均入选成交价改善</span><strong data-module="hftImprove">+0.0188%</strong>
+          </div>
+        </article>
+
+        <article class="diagnostic-pane matrix-pane">
+          <header><span>市场状态 × 多空结构</span><small>描述性 · 累计收益 %</small></header>
+          <div class="matrix" aria-label="市场状态与多空非对称对比">
+            <span></span><b>对称</b><b>非对称</b>
+            <b>关闭市场状态</b><i data-ablation="state0Asym0">+156.90%</i><i data-ablation="state0Asym1">+222.41%</i>
+            <b>启用市场状态</b><i data-ablation="state1Asym0">+254.82%</i><i class="matrix-best" data-ablation="state1Asym1">+349.14%</i>
+          </div>
+          <p class="pane-note">该矩阵在共同样本中拆分市场状态约束与多空非对称处理的影响。</p>
+        </article>
+
+        <article class="diagnostic-pane distribution-pane">
+          <header><span>交易周期收益分布</span><small>标准化收益 % · 一倍</small></header>
+          <canvas id="episodeDistribution" aria-label="标准化多头与空头交易周期收益分布"></canvas>
+          <div class="distribution-foot"><span><i class="swatch swatch-long"></i>多头</span><span><i class="swatch swatch-short"></i>空头</span><span>中位数 <b data-metric="longMedian">−0.41%</b> / <b data-metric="shortMedian">+0.04%</b></span></div>
+        </article>
+      </div>
+    </section>
+
+    <section class="evidence-shell shell" id="evidence">
+      <header class="section-head">
+        <div class="console-title">
+          <span class="console-index">05</span>
+          <div><h2>证据边界</h2><p>公开制品支持的结论与保留范围</p></div>
+        </div>
+      </header>
+      <div class="evidence-grid">
+        <article><span class="status-chip active">已核验</span><h3>主要结果</h3><p>一倍 BTC/USDT 历史模拟、同时间轴基准、显式手续费、零返佣与同步回撤。</p></article>
+        <article><span class="status-chip active">已核验</span><h3>模型设计</h3><p>市场状态约束的风险定仓、滚动前推空头否决与因果利润保护。</p></article>
+        <article><span class="status-chip research">历史研究</span><h3>市场微观结构</h3><p>实测一秒一档行情只替换入选事件的历史成交价，不改变方向或目标仓位。</p></article>
+        <article><span class="status-chip withheld">保密</span><h3>专有细节</h3><p>具体因子、阈值、拟合后的树规则、数据连接和生产执行逻辑不对外公开。</p></article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer shell" id="scope">
+    <span data-evidence-updated>更新至 2026-08-25 16:00Z · 含成本历史回放</span>
+    <span>1.0 倍 · ±100% 敞口上限 · 零返佣</span>
+    <span>姚启东 · 量化研究</span>
+  </footer>
+
+  <script src="assets/vendor/lightweight-charts.standalone.production.js"></script>
+  <script src="data/showcase-data.js?v=20260826h"></script>
+  <script src="data/verified-metrics.js?v=20260826h"></script>
+  <script src="assets/app.js?v=20260826h"></script>
+</body>
+</html>

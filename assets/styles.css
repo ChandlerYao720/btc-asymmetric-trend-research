@@ -20,6 +20,10 @@
   --sans: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
 
+html[lang="zh-CN"] {
+  --sans: Inter, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
 * {
   box-sizing: border-box;
 }
@@ -150,6 +154,42 @@ p {
 .command-bar nav {
   display: flex;
   color: var(--muted);
+}
+
+.command-actions {
+  display: flex;
+  align-items: stretch;
+  min-width: 0;
+}
+
+.language-switch {
+  display: flex;
+  align-items: center;
+  margin-left: 10px;
+  border-right: 1px solid var(--line);
+  border-left: 1px solid var(--line);
+  color: var(--dim);
+  white-space: nowrap;
+}
+
+.language-switch a,
+.language-switch strong,
+.language-switch span {
+  padding: 4px 5px;
+}
+
+.language-switch strong {
+  color: var(--acid);
+  font-weight: 700;
+}
+
+.language-switch a {
+  color: var(--muted);
+}
+
+.language-switch a:hover {
+  color: var(--acid);
+  background: rgba(201, 255, 61, 0.035);
 }
 
 .command-bar nav a:hover {
@@ -1596,6 +1636,17 @@ h1 em {
   .command-bar nav a {
     padding-inline: 6px;
     font-size: 7px;
+  }
+
+  .language-switch {
+    margin-left: 5px;
+    font-size: 8px;
+  }
+
+  .language-switch a,
+  .language-switch strong,
+  .language-switch span {
+    padding-inline: 4px;
   }
 
   .command-bar nav a:nth-child(4) {

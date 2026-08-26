@@ -1,12 +1,20 @@
 (() => {
   "use strict";
 
+  const isZh = document.documentElement.lang.toLowerCase().startsWith("zh");
+  const t = (english, chinese) => isZh ? chinese : english;
   const data = window.BTC_SHOWCASE_DATA;
   const verifiedMetrics = window.BTC_VERIFIED_METRICS ?? {};
   const charts = window.LightweightCharts;
 
+  document.querySelectorAll(".language-switch a").forEach((link) => {
+    link.addEventListener("click", () => {
+      if (window.location.hash) link.hash = window.location.hash;
+    });
+  });
+
   if (!data || !charts) {
-    document.body.insertAdjacentHTML("afterbegin", '<p class="load-error">DATA_LOAD_ERROR // strategy snapshot unavailable</p>');
+    document.body.insertAdjacentHTML("afterbegin", `<p class="load-error">${t("DATA_LOAD_ERROR // strategy snapshot unavailable", "数据加载错误 // 策略快照暂不可用")}</p>`);
     return;
   }
 
@@ -56,8 +64,10 @@
     });
   };
 
-  setText("[data-run-range]", `RUN / ${compactUtcLabel(data.meta.start)} → ${compactUtcLabel(data.meta.end)}`);
-  setText("[data-evidence-updated]", `UPDATED ${utcLabel(data.meta.end)}Z · COST-ADJUSTED HISTORICAL REPLAY`);
+  setText("[data-run-range]", `${t("RUN", "区间")} / ${compactUtcLabel(data.meta.start)} → ${compactUtcLabel(data.meta.end)}`);
+  setText("[data-evidence-updated]", isZh
+    ? `更新至 ${utcLabel(data.meta.end)}Z · 含成本历史回放`
+    : `UPDATED ${utcLabel(data.meta.end)}Z · COST-ADJUSTED HISTORICAL REPLAY`);
 
   const metricBindings = {
     netReturn: signedPercent(data.metrics.netReturnPct),
@@ -75,18 +85,21 @@
     episodePayoffMeta: `${data.metrics.episodes} CLOSED · W/L`,
     profitFactor: Number(data.metrics.episodeProfitFactor1x).toFixed(2),
     winRate: plainPercent(data.metrics.winRatePct, 2),
-    episodeCount: Number(data.metrics.episodes).toLocaleString("en-US"),
-    avgHolding: `${Number(verifiedMetrics.avgHoldingDays).toFixed(2)}D`,
-    adjustments: Number(data.metrics.adjustments).toLocaleString("en-US"),
+    episodeCount: Number(data.metrics.episodes).toLocaleString(isZh ? "zh-CN" : "en-US"),
+    avgHolding: `${Number(verifiedMetrics.avgHoldingDays).toFixed(2)}${t("D", "天")}`,
+    adjustments: Number(data.metrics.adjustments).toLocaleString(isZh ? "zh-CN" : "en-US"),
     longMedian: signedPercent(data.metrics.longMedianPct),
     shortMedian: signedPercent(data.metrics.shortMedianPct),
   };
   Object.entries(metricBindings).forEach(([key, value]) => setText(`[data-metric="${key}"]`, value));
 
+  const sideLabels = isZh
+    ? { LONG: "做多", SHORT: "做空", FLAT: "空仓" }
+    : { LONG: "LONG", SHORT: "SHORT", FLAT: "FLAT" };
   const replayBindings = {
     latestPrice: money.format(data.recentReplay.latestPrice),
     latestTime: `${utcLabel(data.recentReplay.latestTime)}Z`,
-    latestTarget: `${signedPercent(data.recentReplay.latestTargetPct)} ${data.recentReplay.latestSide}`,
+    latestTarget: `${signedPercent(data.recentReplay.latestTargetPct)} ${sideLabels[data.recentReplay.latestSide] ?? data.recentReplay.latestSide}`,
     troughCapture: signedPercent(data.recentReplay.troughToLatestReturnPct),
     troughBenchmark: `BTC ${signedPercent(data.recentReplay.troughToLatestBtcPct)}`,
     last120h: signedPercent(data.recentReplay.last120hReturnPct),
@@ -125,15 +138,27 @@
     eventMap.set(time, events);
   };
 
+  const tradeKindLabels = isZh
+    ? { add: "加仓", close: "平仓", open: "开仓", reduce: "减仓" }
+    : { add: "ADD", close: "CLOSE", open: "OPEN", reduce: "REDUCE" };
+  const stateActionLabels = isZh
+    ? { continue: "继续", exit: "退出", reduce: "减仓", restore: "恢复" }
+    : { continue: "CONTINUE", exit: "EXIT", reduce: "REDUCE", restore: "RESTORE" };
+  const mfeActionLabels = isZh
+    ? { "Exit all": "全部退出", "Exit remaining": "退出剩余仓位", "Reduce 50%": "减仓50%" }
+    : { "Exit all": "EXIT_ALL", "Exit remaining": "EXIT_REMAINING", "Reduce 50%": "REDUCE_50%" };
+
   data.episodes.forEach((episode) => {
     const code = episode.side === "long" ? "L" : "S";
-    addEvent(episode.entryTime, `${code}:ENTRY`);
-    addEvent(episode.exitTime, `${code}:${episode.closed ? "EXIT" : "OPEN"}`);
+    addEvent(episode.entryTime, isZh ? `${code}:入场` : `${code}:ENTRY`);
+    addEvent(episode.exitTime, isZh ? `${code}:${episode.closed ? "退出" : "持有"}` : `${code}:${episode.closed ? "EXIT" : "OPEN"}`);
   });
-  data.trades.forEach((trade) => addEvent(trade.time, `${trade.action}:${trade.kind.toUpperCase()} ${signedPercent(trade.deltaPct, 1)}`));
-  data.stateEvents.forEach((event) => addEvent(event.time, `STATE:${event.action.toUpperCase()}`));
-  data.hftEvents.forEach((event) => addEvent(event.time, `L1PX:${signedPercent(event.improvementPct, 4)}`));
-  data.mfeEvents.forEach((event) => addEvent(event.time, `MFE:${event.action.toUpperCase().replaceAll(" ", "_")}`));
+  data.trades.forEach((trade) => addEvent(trade.time, isZh
+    ? `${trade.action === "B" ? "买" : "卖"}:${tradeKindLabels[trade.kind] ?? trade.kind} ${signedPercent(trade.deltaPct, 1)}`
+    : `${trade.action}:${tradeKindLabels[trade.kind] ?? trade.kind.toUpperCase()} ${signedPercent(trade.deltaPct, 1)}`));
+  data.stateEvents.forEach((event) => addEvent(event.time, `${t("STATE", "风险状态")}:${stateActionLabels[event.action] ?? event.action}`));
+  data.hftEvents.forEach((event) => addEvent(event.time, `${t("L1PX", "L1成交价")}:${signedPercent(event.improvementPct, 4)}`));
+  data.mfeEvents.forEach((event) => addEvent(event.time, `${t("MFE", "利润保护")}:${mfeActionLabels[event.action] ?? event.action}`));
 
   const baseChartOptions = () => ({
     width: 0,
@@ -177,7 +202,7 @@
       mouseWheel: true,
       pinch: true,
     },
-    localization: { locale: "en-US" },
+    localization: { locale: isZh ? "zh-CN" : "en-US" },
   });
 
   const createResponsiveChart = (element, extra = {}) => {
@@ -375,7 +400,7 @@
 
       context.setLineDash([]);
       if (span > 32) {
-        const state = episode.closed ? signedPercent(episode.pnlPct, 2) : `OPEN ${signedPercent(episode.pnlPct, 2)}`;
+        const state = episode.closed ? signedPercent(episode.pnlPct, 2) : `${t("OPEN", "持有")} ${signedPercent(episode.pnlPct, 2)}`;
         const label = `${long ? "L" : "S"} ${state}`;
         context.save();
         context.beginPath();
@@ -409,7 +434,9 @@
 
   const setWindowLabel = (from, to) => {
     const days = Math.max(1, Math.round((to - from) / day));
-    windowLabel.textContent = `WINDOW / ${dateLabel(from)} → ${dateLabel(to)} / ${days}D`;
+    windowLabel.textContent = isZh
+      ? `区间 / ${dateLabel(from)} → ${dateLabel(to)} / ${days}天`
+      : `WINDOW / ${dateLabel(from)} → ${dateLabel(to)} / ${days}D`;
   };
 
   const applyWindowAt = (ratio = 1) => {
@@ -418,7 +445,9 @@
       priceRuntime.chart.timeScale().fitContent();
       applyingWindow = false;
       pan.disabled = true;
-      windowLabel.textContent = `WINDOW / ${dateLabel(data.meta.start)} → ${dateLabel(data.meta.end)} / ALL`;
+      windowLabel.textContent = isZh
+        ? `区间 / ${dateLabel(data.meta.start)} → ${dateLabel(data.meta.end)} / 全部`
+        : `WINDOW / ${dateLabel(data.meta.start)} → ${dateLabel(data.meta.end)} / ALL`;
       queueLifecycleOverlay();
       return;
     }
@@ -470,12 +499,12 @@
     document.querySelector("#readoutTime").textContent = `${utcLabel(time)}Z`;
     document.querySelector("#readoutClose").textContent = money.format(candle.close);
     document.querySelector("#readoutPosition").textContent = signedPercent(position.value, 1);
-    document.querySelector("#readoutState").textContent = position.value > epsilon ? "LONG" : position.value < -epsilon ? "SHORT" : "FLAT";
+    document.querySelector("#readoutState").textContent = position.value > epsilon ? sideLabels.LONG : position.value < -epsilon ? sideLabels.SHORT : sideLabels.FLAT;
     const events = eventMap.get(time) ?? [];
     const visibleEvents = events.slice(0, 4);
     document.querySelector("#readoutEvents").textContent = visibleEvents.length
       ? `${visibleEvents.join(" / ")}${events.length > visibleEvents.length ? ` / +${events.length - visibleEvents.length}` : ""}`
-      : "NO_DISCRETE_EVENT";
+      : t("NO_DISCRETE_EVENT", "无离散事件");
   };
 
   const syncCrosshair = (sourceChart, targetChart, sourceSeries, targetSeries, targetMap) => {
@@ -546,7 +575,9 @@
     const benchmark = benchmarkByTime.get(time);
     const drawdown = drawdownByTime.get(time);
     if (!strategy || !benchmark || !drawdown) return;
-    document.querySelector("#equityReadout").textContent = `${utcLabel(time)}Z // C1 ${signedPercent(strategy.value)} // BTC ${signedPercent(benchmark.value)} // DD ${signedPercent(drawdown.value)}`;
+    document.querySelector("#equityReadout").textContent = isZh
+      ? `${utcLabel(time)}Z // 策略 ${signedPercent(strategy.value)} // BTC ${signedPercent(benchmark.value)} // 回撤 ${signedPercent(drawdown.value)}`
+      : `${utcLabel(time)}Z // C1 ${signedPercent(strategy.value)} // BTC ${signedPercent(benchmark.value)} // DD ${signedPercent(drawdown.value)}`;
   };
 
   const syncEquityCrosshair = (sourceChart, targetChart, sourceSeries, targetSeries, targetMap) => {
@@ -567,7 +598,14 @@
 
   const ablationRoot = document.querySelector("#ablationChart");
   const maxAblation = Math.max(...data.ablation.variants.map((variant) => variant.returnPct));
-  const ablationLabel = {
+  const ablationLabel = isZh ? {
+    full: "完整系统",
+    parent: "仅父策略",
+    withoutBadShort: "− 空头风险否决",
+    withoutSideAsym: "− 多空非对称",
+    withoutState: "− 市场状态",
+    withoutBullCap: "− 牛市仓位上限",
+  } : {
     full: "FULL.SYSTEM",
     parent: "PARENT.ONLY",
     withoutBadShort: "− BAD_SHORT.VETO",

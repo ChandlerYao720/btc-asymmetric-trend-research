@@ -10,7 +10,7 @@ A public, evidence-backed portfolio of systematic BTC research: multi-horizon di
 
 Drag or zoom through the four-hour candlestick tape, inspect the synchronized signed target, and toggle lifecycle, order, risk-state, profit-protection, and historical one-second L1 execution events.
 
-[![Systematic BTC research and execution stack](assets/preview.png?v=20260826g)](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
+[![Systematic BTC research and execution stack](assets/preview.png?v=20260826h)](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
 
 ## Quant snapshot
 
