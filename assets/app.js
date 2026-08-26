@@ -58,8 +58,10 @@
     benchmarkReturn: signedPercent(data.metrics.benchmarkReturnPct),
     maxDrawdown: signedPercent(data.metrics.maxDrawdownPct),
     sharpe: Number(data.metrics.sharpe).toFixed(2),
-    episodes: String(data.metrics.episodes),
-    episodeSplit: `${data.metrics.longEpisodes}L / ${data.metrics.shortEpisodes}S`,
+    calmar: Number(data.metrics.calmar).toFixed(2),
+    informationRatio: Number(data.metrics.informationRatio4hVsBtc1x).toFixed(2),
+    episodePayoff: `${Number(data.metrics.episodePayoffRatio1x).toFixed(2)}×`,
+    episodePayoffMeta: `${data.metrics.episodes} CLOSED · AVG W/L`,
     longMedian: signedPercent(data.metrics.longMedianPct),
     shortMedian: signedPercent(data.metrics.shortMedianPct),
   };

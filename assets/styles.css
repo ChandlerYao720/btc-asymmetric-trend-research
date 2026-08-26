@@ -244,7 +244,7 @@ h1 em {
 
 .metric-strip {
   display: grid;
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+  grid-template-columns: repeat(8, minmax(0, 1fr));
   border-top: 1px solid var(--line-hot);
   border-bottom: 1px solid var(--line-hot);
   background: rgba(6, 13, 18, 0.62);
@@ -273,7 +273,7 @@ h1 em {
   margin: 8px 0 7px;
   overflow: hidden;
   color: var(--text);
-  font-size: clamp(18px, 2vw, 29px);
+  font-size: clamp(17px, 1.65vw, 26px);
   font-weight: 500;
   letter-spacing: -0.05em;
   text-overflow: ellipsis;
@@ -986,14 +986,14 @@ h1 em {
   }
 
   .metric-strip {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .metric-strip article:nth-child(3) {
+  .metric-strip article:nth-child(4n) {
     border-right: 0;
   }
 
-  .metric-strip article:nth-child(-n + 3) {
+  .metric-strip article:nth-child(-n + 4) {
     border-bottom: 1px solid var(--line);
   }
 
@@ -1090,15 +1090,11 @@ h1 em {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
-  .metric-strip article:nth-child(3) {
-    border-right: 1px solid var(--line);
-  }
-
   .metric-strip article:nth-child(2n) {
     border-right: 0;
   }
 
-  .metric-strip article:nth-child(-n + 4) {
+  .metric-strip article:nth-child(-n + 6) {
     border-bottom: 1px solid var(--line);
   }
 

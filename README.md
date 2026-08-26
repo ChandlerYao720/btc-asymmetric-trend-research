@@ -1,10 +1,10 @@
 # BTC Asymmetric Trend Research
 
-An interactive, evidence-grounded research console for a BTC/USDT trend system with a strict **100% exposure ceiling**.
+An interactive, evidence-grounded research console for a BTC/USDT trend system with a strict **1.0× leverage ceiling** and target exposure bounded between −100% and +100%.
 
 [Open the interactive research page](https://chandleryao720.github.io/btc-asymmetric-trend-research/)
 
-![Interactive BTC strategy research preview](assets/preview.png?v=20260826)
+![Interactive BTC strategy research preview](assets/preview.png?v=20260826b)
 
 ## Research thesis
 
@@ -25,10 +25,14 @@ The contribution is not the headline return by itself. The system separates five
 | BTC buy-and-hold return | +87.58% |
 | Maximum drawdown | −14.34% |
 | Sharpe ratio | 2.35 |
+| Calmar ratio | 5.41 |
+| Information ratio vs BTC 1× | 0.49 |
+| Closed-episode payoff ratio | 1.87× |
 | Closed episodes | 284 |
+| Leverage ceiling | 1.0× |
 | Target exposure | −100% to +100% |
 
-The primary path includes a 0.02% maker fee, a 0.05% taker fee, side-specific one-second best bid/ask execution where available, and no rebate. The page contains no higher-exposure scenario.
+The primary path includes a 0.02% maker fee, a 0.05% taker fee, side-specific one-second best bid/ask execution where available, and no rebate. The page contains no higher-leverage scenario. Sharpe uses the four-hour C1 net-return series. Calmar is annualized return divided by the absolute maximum drawdown. Information ratio is the annualized mean four-hour active return versus same-clock BTC 1× divided by its tracking error. Closed-episode payoff is the mean winning one-times episode return divided by the absolute mean losing one-times episode return; the still-open final episode is excluded.
 
 The interactive report includes:
 

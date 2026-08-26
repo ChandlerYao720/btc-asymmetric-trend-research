@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive BTC/USDT asymmetric trend research replay through 2026-08-25: 4-hour decisions, 100% exposure ceiling, real-cost performance, lifecycle bands and execution events.">
+  <meta name="description" content="Interactive BTC/USDT asymmetric trend research replay through 2026-08-25: 4-hour decisions, a hard 1.0x leverage ceiling, real-cost performance, lifecycle bands and execution events.">
   <meta name="theme-color" content="#05090d">
   <meta property="og:type" content="website">
   <meta property="og:title" content="BTC Asymmetric Trend · Research Console">
   <meta property="og:description" content="A code-forward research console for a frozen, cost-aware BTC trend strategy with draggable decision replay and event-level execution evidence.">
-  <meta property="og:image" content="https://chandleryao720.github.io/btc-asymmetric-trend-research/assets/preview.png?v=20260826">
+  <meta property="og:image" content="https://chandleryao720.github.io/btc-asymmetric-trend-research/assets/preview.png?v=20260826b">
   <meta name="twitter:card" content="summary_large_image">
   <title>BTC Asymmetric Trend · Research Console</title>
-  <link rel="stylesheet" href="assets/styles.css?v=20260826">
+  <link rel="stylesheet" href="assets/styles.css?v=20260826b">
 </head>
 <body>
   <header class="command-bar">
@@ -41,6 +41,7 @@
         <div class="build-note">
           <span>MODE</span><strong>HISTORICAL_SIMULATION</strong>
           <span>EXPOSURE</span><strong>−100.00% … +100.00%</strong>
+          <span>LEVERAGE</span><strong>1.0X // HARD CAP</strong>
           <span>COST</span><strong>MAKER 0.02% / TAKER 0.05%</strong>
           <span>REBATE</span><strong>0.00%</strong>
         </div>
@@ -52,8 +53,10 @@
       <article><span>RET.GROSS.C0</span><strong data-metric="grossReturn">+489.41%</strong><small>DIAGNOSTIC</small></article>
       <article><span>RET.BTC.1X</span><strong data-metric="benchmarkReturn">+87.58%</strong><small>SAME CLOCK</small></article>
       <article><span>MAX.DRAWDOWN</span><strong class="negative" data-metric="maxDrawdown">−14.34%</strong><small>C1 PATH</small></article>
-      <article><span>SHARPE</span><strong data-metric="sharpe">2.35</strong><small>4H SERIES</small></article>
-      <article><span>EPISODES</span><strong data-metric="episodes">284</strong><small data-metric="episodeSplit">96L / 188S</small></article>
+      <article><span>SHARPE</span><strong data-metric="sharpe">2.35</strong><small>4H NET</small></article>
+      <article><span>CALMAR</span><strong data-metric="calmar">5.41</strong><small>CAGR / |MAX.DD|</small></article>
+      <article><span>INFO.RATIO</span><strong data-metric="informationRatio">0.49</strong><small>VS BTC · 4H</small></article>
+      <article><span>EP.PAYOFF</span><strong data-metric="episodePayoff">1.87×</strong><small data-metric="episodePayoffMeta">284 CLOSED · AVG W/L</small></article>
     </section>
 
     <section class="replay-strip shell" aria-label="Latest append-only replay">
@@ -210,7 +213,7 @@
   </footer>
 
   <script src="assets/vendor/lightweight-charts.standalone.production.js"></script>
-  <script src="data/showcase-data.js?v=20260826"></script>
-  <script src="assets/app.js?v=20260826"></script>
+  <script src="data/showcase-data.js?v=20260826b"></script>
+  <script src="assets/app.js?v=20260826b"></script>
 </body>
 </html>
